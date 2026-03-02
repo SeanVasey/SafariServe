@@ -1,6 +1,20 @@
 # Task Plan
 
-## Current Session: v1.1.0 — Issue Fixes & Code Quality
+## Current Session: v1.1.1 — Codebase Cleanup & Documentation Audit
+
+- [x] Full codebase audit for merge conflicts, duplicates, and bad merges
+- [x] Run all verification checks (lint, typecheck, tests, build)
+- [x] Deep-read every file in the repository
+- [x] Fix `.gitignore`: `.DS_Store?` glob doesn't match `.DS_Store` — changed to `.DS_Store`
+- [x] Fix `README.md`: remove duplicate `.github/workflows/ci.yml` entry from project structure
+- [x] Fix `README.md`: add missing root-level files to project structure
+- [x] Fix `README.md`: add missing `apple-touch-icon.png` to public directory listing
+- [x] Clean up stale unchecked item from previous v1.1.0 session
+- [x] Update CHANGELOG with v1.1.1 fixes
+- [x] Re-run all verification checks
+- [ ] Commit and push to feature branch
+
+## Previous Session: v1.1.0 — Issue Fixes & Code Quality
 
 - [x] Fix Issue #3: Remove duplicate `.DS_Store` entry in `.gitignore`
 - [x] Fix Issue #4: Add enforcement contact email to `CODE_OF_CONDUCT.md`
@@ -21,7 +35,7 @@
 - [x] Update version to 1.1.0 (package.json, Header badge)
 - [x] Update CHANGELOG with v1.1.0 release notes
 - [x] Verify: lint (0 warnings), typecheck (clean), tests (35 pass), build (success)
-- [ ] Commit and push to feature branch
+- [x] Commit and push to feature branch
 
 ## Previous Session: SafariServe v1.0 Implementation
 

@@ -26,3 +26,10 @@ Accumulated patterns from corrections and mistakes. Reviewed at the start of eac
 - **Semantic HTML**: Use `<header>`, `<ul>/<li>`, and `role="list"` for list elements with `list-none` to preserve VoiceOver list semantics.
 - **Type safety over casts**: Prefer typed function signatures (`type: MediaType`) over runtime casts (`type as MediaType`). Catches misuse at compile time.
 - **Non-functional UI elements**: Never render buttons/tabs that do nothing when clicked. Either implement them or remove them.
+
+## 2026-03-02 — v1.1.1 Codebase Cleanup & Documentation Audit
+
+- **`.gitignore` glob pitfall**: `.DS_Store?` does NOT match `.DS_Store` — the `?` wildcard matches exactly one character, so it only matches files like `.DS_StoreX`. Use `.DS_Store` (no wildcard) to match the actual macOS metadata file.
+- **README project structure accuracy**: When documenting project structure, list ALL root-level files including build/config files (`index.html`, `package.json`, tsconfigs, vite/vitest configs, eslint config). Don't duplicate entries that already appear in the tree hierarchy (e.g., `ci.yml` was listed both inside `.github/workflows/` tree and again as a standalone root entry).
+- **Stale task tracking**: Mark todo items as complete when their associated PRs are merged. Unchecked items in completed sessions create confusion about actual state.
+- **Version consistency across files**: When bumping version, update ALL locations: `package.json`, Header component badge, test assertions that check the version string, and CHANGELOG.
