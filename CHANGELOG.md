@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.1] - 2026-03-02
+
+### Fixed
+
+- Fix `.gitignore`: `.DS_Store?` glob didn't match `.DS_Store` — the `?` wildcard requires one trailing character, so the actual `.DS_Store` file was never ignored
+- Fix `README.md`: remove duplicate `.github/workflows/ci.yml` entry from project structure (listed both in tree and as standalone root entry)
+- Fix `README.md`: add missing root-level files to project structure (`index.html`, `package.json`, tsconfig files, `vite.config.ts`, `vitest.config.ts`, `eslint.config.js`, `README.md`)
+- Fix `README.md`: add missing `apple-touch-icon.png` to public directory listing
+- Fix `tasks/todo.md`: mark stale unchecked v1.1.0 item as complete (was already merged via PR #8)
+
 ## [1.1.0] - 2026-03-02
 
 ### Fixed

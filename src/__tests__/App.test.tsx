@@ -35,7 +35,7 @@ describe("App", () => {
     render(<App />);
     expect(screen.getByText("VASEY/AI PRESENTS")).toBeInTheDocument();
     expect(screen.getByText("SafariServe")).toBeInTheDocument();
-    expect(screen.getByText("v1.1")).toBeInTheDocument();
+    expect(screen.getByText("v1.1.1")).toBeInTheDocument();
     expect(
       screen.getByText("Your gateway to Safari, from anywhere."),
     ).toBeInTheDocument();

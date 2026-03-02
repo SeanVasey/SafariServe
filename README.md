@@ -74,6 +74,7 @@ SafariServe/
 ├── .github/workflows/
 │   └── ci.yml                  # CI pipeline (lint, typecheck, test, build)
 ├── public/
+│   ├── apple-touch-icon.png    # iOS home screen icon (180x180)
 │   ├── favicon.svg             # App icon (compass rose motif)
 │   └── manifest.json           # PWA manifest
 ├── src/
@@ -94,12 +95,20 @@ SafariServe/
 │   └── index.css             # Tailwind imports + design tokens
 ├── .editorconfig             # Editor formatting rules
 ├── .gitignore                # Git ignore rules
-├── .github/workflows/ci.yml  # CI pipeline
-├── CLAUDE.md                 # Engineering standards
 ├── CHANGELOG.md              # Project changelog
+├── CLAUDE.md                 # Engineering standards
 ├── CODE_OF_CONDUCT.md        # Contributor Covenant
 ├── LICENSE                   # Apache License 2.0
+├── README.md                 # This file
 ├── SECURITY.md               # Vulnerability reporting
+├── eslint.config.js          # ESLint 9 flat config
+├── index.html                # HTML entry point
+├── package.json              # Dependencies and scripts
+├── tsconfig.json             # TypeScript project references
+├── tsconfig.app.json         # TypeScript config for src/
+├── tsconfig.node.json        # TypeScript config for build tooling
+├── vite.config.ts            # Vite build configuration
+├── vitest.config.ts          # Vitest test configuration
 └── tasks/
     ├── lessons.md            # Accumulated development lessons
     └── todo.md               # Active task tracking
