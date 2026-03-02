@@ -90,6 +90,8 @@ SafariServe/
 │   ├── App.tsx               # Root application component
 │   ├── main.tsx              # Entry point
 │   └── index.css             # Tailwind imports + design tokens
+├── .editorconfig             # Editor formatting rules
+├── .gitignore                # Git ignore rules
 ├── .github/workflows/ci.yml  # CI pipeline
 ├── CLAUDE.md                 # Engineering standards
 ├── CHANGELOG.md              # Project changelog

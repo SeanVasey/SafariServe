@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { Globe } from "lucide-react";
 import { Header } from "./components/Header";
 import { UrlSubmissionPanel } from "./components/UrlSubmissionPanel";
 import { ShortcutGeneratorPanel } from "./components/ShortcutGeneratorPanel";
@@ -10,11 +9,9 @@ import { detectMediaType, extractDomain } from "./utils/detectMediaType";
 import { loadHistory, addToHistory } from "./utils/storage";
 import type { MediaInfo, HistoryEntry, TabId } from "./types";
 
-const DEFAULT_MEDIA: MediaInfo = {
-  type: "None",
-  icon: Globe,
-  shortcutPrefix: "🌐",
-};
+const DEFAULT_MEDIA: MediaInfo = detectMediaType("");
+
+const SAFE_PROTOCOLS = ["http:", "https:", "shortcuts:"];
 
 export default function App() {
   const [url, setUrl] = useState("");
@@ -49,8 +46,14 @@ export default function App() {
 
   const handleOpenSafari = useCallback(() => {
     if (!url) return;
+    try {
+      const parsed = new URL(url);
+      if (!SAFE_PROTOCOLS.includes(parsed.protocol)) return;
+    } catch {
+      return;
+    }
     setHistory((prev) => addToHistory(url, mediaInfo.type, prev));
-    window.open(url, "_blank");
+    window.open(url, "_blank", "noopener,noreferrer");
   }, [url, mediaInfo.type]);
 
   const handleScrollToGenerator = useCallback(() => {

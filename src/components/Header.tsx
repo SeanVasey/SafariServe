@@ -2,7 +2,7 @@ import { Compass, ArrowUpRight } from "lucide-react";
 
 export function Header() {
   return (
-    <div className="flex flex-col items-center justify-center text-center mb-8 pt-4">
+    <header className="flex flex-col items-center justify-center text-center mb-8 pt-4">
       <div className="tracking-[0.25em] text-[10px] font-bold mb-3 uppercase bg-gradient-to-r from-[#FF7B54] to-[#FFB26B] bg-clip-text text-transparent">
         VASEY/AI PRESENTS
       </div>
@@ -21,12 +21,12 @@ export function Header() {
           SafariServe
         </h1>
         <span className="px-2 py-0.5 rounded-full bg-safari-cyan/10 border border-safari-cyan/20 text-safari-cyan text-[10px] font-bold ml-1 tracking-wider">
-          v1.0
+          v1.1
         </span>
       </div>
       <p className="text-safari-text/50 text-sm font-medium tracking-wide">
         Your gateway to Safari, from anywhere.
       </p>
-    </div>
+    </header>
   );
 }

@@ -1,14 +1,14 @@
 {
   "name": "safariserve",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Your gateway to Safari, from anywhere.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "lint": "eslint src --max-warnings 0",
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
