@@ -2,8 +2,6 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   loadHistory,
   addToHistory,
-  loadFavorites,
-  toggleFavorite,
 } from "../utils/storage";
 
 // Mock localStorage
@@ -78,21 +76,10 @@ describe("storage utilities", () => {
     });
   });
 
-  describe("loadFavorites", () => {
-    it("returns empty array when no data", () => {
-      expect(loadFavorites()).toEqual([]);
-    });
-  });
-
-  describe("toggleFavorite", () => {
-    it("adds new favorite", () => {
-      const result = toggleFavorite("https://a.com", []);
-      expect(result).toEqual(["https://a.com"]);
-    });
-
-    it("removes existing favorite", () => {
-      const result = toggleFavorite("https://a.com", ["https://a.com"]);
-      expect(result).toEqual([]);
+  describe("loadHistory edge cases", () => {
+    it("returns empty array for non-array JSON", () => {
+      localStorageMock.setItem("safariServe_history", JSON.stringify("string"));
+      expect(loadHistory()).toEqual([]);
     });
   });
 });

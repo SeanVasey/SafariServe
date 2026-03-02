@@ -35,7 +35,7 @@ describe("App", () => {
     render(<App />);
     expect(screen.getByText("VASEY/AI PRESENTS")).toBeInTheDocument();
     expect(screen.getByText("SafariServe")).toBeInTheDocument();
-    expect(screen.getByText("v1.0")).toBeInTheDocument();
+    expect(screen.getByText("v1.1")).toBeInTheDocument();
     expect(
       screen.getByText("Your gateway to Safari, from anywhere."),
     ).toBeInTheDocument();
@@ -65,10 +65,9 @@ describe("App", () => {
 
   it("renders quick action tabs", () => {
     render(<App />);
+    expect(screen.getAllByText("Generator").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("History").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Templates").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Share").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Settings").length).toBeGreaterThanOrEqual(1);
   });
 
   it("switches to history tab and shows empty state", () => {
