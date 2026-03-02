@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-safari-deep: #0A0E14;
+  --color-safari-surface: #111820;
+  --color-safari-cyan: #00D2FF;
+  --color-safari-teal: #00B4D8;
+  --color-safari-blue: #0077B6;
+  --color-safari-text: #E8EDF2;
+  --color-safari-muted: rgba(232, 237, 242, 0.5);
+}
+
+body {
+  margin: 0;
+  background-color: #0A0E14;
+  color: #E8EDF2;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Safe area padding for iOS notch */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 1rem);
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 210, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 210, 255, 0.3);
+}
