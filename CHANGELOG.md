@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.0] - 2026-03-02
+
+### Fixed
+
+- Remove duplicate `.DS_Store` entry in `.gitignore` ([#3](https://github.com/SeanVasey/SafariServe/issues/3))
+- Add enforcement contact email to `CODE_OF_CONDUCT.md` ([#4](https://github.com/SeanVasey/SafariServe/issues/4))
+- Update project structure diagram in `README.md` to include `.editorconfig`, `.gitignore`, and `README.md` ([#5](https://github.com/SeanVasey/SafariServe/issues/5))
+- Add security contact email to `SECURITY.md` ([#6](https://github.com/SeanVasey/SafariServe/issues/6))
+
 ## [1.0.0] - 2026-03-02
 
 ### Added
@@ -25,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ESLint 9 + TypeScript ESLint with zero-warning policy
 - GitHub Actions CI pipeline (lint, typecheck, test, build)
 
-## [Unreleased]
+## [0.1.0] - 2026-03-02
 
 ### Added
 

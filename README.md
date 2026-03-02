@@ -71,13 +71,15 @@ npm run typecheck
 
 ```
 SafariServe/
+├── .github/workflows/
+│   └── ci.yml                  # CI pipeline (lint, typecheck, test, build)
 ├── public/
-│   ├── favicon.svg           # App icon (compass rose motif)
-│   └── manifest.json         # PWA manifest
+│   ├── favicon.svg             # App icon (compass rose motif)
+│   └── manifest.json           # PWA manifest
 ├── src/
-│   ├── __tests__/            # Test suites (App, detectMediaType, storage)
+│   ├── __tests__/              # Test suites (App, detectMediaType, storage)
 │   ├── components/
-│   │   ├── Header.tsx        # VASEY/AI branding header
+│   │   ├── Header.tsx          # VASEY/AI branding header
 │   │   ├── UrlSubmissionPanel.tsx
 │   │   ├── ShortcutGeneratorPanel.tsx
 │   │   ├── QuickActionsBar.tsx
@@ -86,19 +88,21 @@ SafariServe/
 │   ├── utils/
 │   │   ├── detectMediaType.ts  # URL → media type classification
 │   │   └── storage.ts          # localStorage persistence layer
-│   ├── types.ts              # Shared TypeScript types
-│   ├── App.tsx               # Root application component
-│   ├── main.tsx              # Entry point
-│   └── index.css             # Tailwind imports + design tokens
-├── .github/workflows/ci.yml  # CI pipeline
-├── CLAUDE.md                 # Engineering standards
-├── CHANGELOG.md              # Project changelog
-├── CODE_OF_CONDUCT.md        # Contributor Covenant
-├── LICENSE                   # Apache License 2.0
-├── SECURITY.md               # Vulnerability reporting
-└── tasks/
-    ├── lessons.md            # Accumulated development lessons
-    └── todo.md               # Active task tracking
+│   ├── types.ts                # Shared TypeScript types
+│   ├── App.tsx                 # Root application component
+│   ├── main.tsx                # Entry point
+│   └── index.css               # Tailwind imports + design tokens
+├── tasks/
+│   ├── lessons.md              # Accumulated development lessons
+│   └── todo.md                 # Active task tracking
+├── .editorconfig               # Editor formatting rules
+├── .gitignore                  # Git ignore rules
+├── CHANGELOG.md                # Project changelog
+├── CLAUDE.md                   # Engineering standards
+├── CODE_OF_CONDUCT.md          # Contributor Covenant
+├── LICENSE                     # Apache License 2.0
+├── README.md                   # Project documentation
+└── SECURITY.md                 # Vulnerability reporting
 ```
 
 ## Design System

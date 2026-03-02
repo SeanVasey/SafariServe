@@ -1,6 +1,17 @@
 # Task Plan
 
-## Current Session: SafariServe v1.0 Implementation
+## Current Session: Fix GitHub Issues #3–#6
+
+- [x] Fix #3: Remove duplicate `.DS_Store` entry in `.gitignore`
+- [x] Fix #4: Add enforcement contact email to `CODE_OF_CONDUCT.md`
+- [x] Fix #5: Update project structure diagram in `README.md` (add `.editorconfig`, `.gitignore`, `README.md`)
+- [x] Fix #6: Add security contact email to `SECURITY.md`
+- [x] Update `CHANGELOG.md` with v1.1.0 release notes
+- [x] Update `tasks/todo.md` and `tasks/lessons.md`
+- [x] Verify: lint, typecheck, tests, build all pass
+- [x] Commit and push to feature branch
+
+## Previous Session: SafariServe v1.0 Implementation
 
 - [x] Initialize Vite + React 19 + TypeScript + Tailwind CSS 4 project
 - [x] Configure Tailwind with SafariServe design tokens (cyan/teal/blue palette)
