@@ -54,7 +54,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - ESLint 9 + TypeScript ESLint with zero-warning policy
 - GitHub Actions CI pipeline (lint, typecheck, test, build)
 
-## [Unreleased]
+## [0.1.0] - 2026-03-02
 
 ### Added
 

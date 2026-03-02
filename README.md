@@ -71,13 +71,15 @@ npm run typecheck
 
 ```
 SafariServe/
+├── .github/workflows/
+│   └── ci.yml                  # CI pipeline (lint, typecheck, test, build)
 ├── public/
-│   ├── favicon.svg           # App icon (compass rose motif)
-│   └── manifest.json         # PWA manifest
+│   ├── favicon.svg             # App icon (compass rose motif)
+│   └── manifest.json           # PWA manifest
 ├── src/
-│   ├── __tests__/            # Test suites (App, detectMediaType, storage)
+│   ├── __tests__/              # Test suites (App, detectMediaType, storage)
 │   ├── components/
-│   │   ├── Header.tsx        # VASEY/AI branding header
+│   │   ├── Header.tsx          # VASEY/AI branding header
 │   │   ├── UrlSubmissionPanel.tsx
 │   │   ├── ShortcutGeneratorPanel.tsx
 │   │   ├── QuickActionsBar.tsx
