@@ -35,16 +35,17 @@ export function ShortcutGeneratorPanel({
       "4. Trigger 'Add to Home Screen'",
       `Name: ${shortcutIcon} ${shortcutName}`,
     ].join("\n");
-    navigator.clipboard.writeText(steps).catch(() => {
-      // Clipboard API may fail in non-HTTPS contexts; silently handle
+    navigator.clipboard.writeText(steps).then(() => {
+      setShowCopied(true);
+      setTimeout(() => setShowCopied(false), 2000);
+    }).catch(() => {
+      // Clipboard API may fail in non-HTTPS contexts
     });
-    setShowCopied(true);
-    setTimeout(() => setShowCopied(false), 2000);
   };
 
   const handleInstallShortcut = () => {
     const encodedName = encodeURIComponent(shortcutName);
-    window.open(`shortcuts://create-shortcut?name=${encodedName}`, "_blank");
+    window.open(`shortcuts://create-shortcut?name=${encodedName}`, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -98,7 +99,7 @@ export function ShortcutGeneratorPanel({
           <div className="absolute top-0 left-4 -translate-y-1/2 px-2 bg-safari-deep text-[9px] uppercase tracking-wider text-safari-cyan font-bold">
             Generated Steps
           </div>
-          <ol className="text-xs text-safari-text/70 space-y-2.5 font-mono list-none pl-0">
+          <ol role="list" className="text-xs text-safari-text/70 space-y-2.5 font-mono list-none pl-0">
             <li className="flex items-start gap-2">
               <span className="text-safari-cyan/50 select-none">1.</span>
               <span>

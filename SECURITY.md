@@ -4,7 +4,7 @@
 
 If you discover a security vulnerability in SafariServe, please report it responsibly.
 
-**Do not open a public issue.** Instead, please email the maintainers at **security@vaseyai.com** or use GitHub's [private vulnerability reporting](https://github.com/SeanVasey/SafariServe/security/advisories/new) feature.
+**Do not open a public issue.** Instead, please email the maintainers at [sean@vasey.audio](mailto:sean@vasey.audio) or use GitHub's [private vulnerability reporting](https://github.com/SeanVasey/SafariServe/security/advisories/new) feature.
 
 ### What to include
 

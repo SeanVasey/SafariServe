@@ -88,21 +88,21 @@ SafariServe/
 │   ├── utils/
 │   │   ├── detectMediaType.ts  # URL → media type classification
 │   │   └── storage.ts          # localStorage persistence layer
-│   ├── types.ts                # Shared TypeScript types
-│   ├── App.tsx                 # Root application component
-│   ├── main.tsx                # Entry point
-│   └── index.css               # Tailwind imports + design tokens
-├── tasks/
-│   ├── lessons.md              # Accumulated development lessons
-│   └── todo.md                 # Active task tracking
-├── .editorconfig               # Editor formatting rules
-├── .gitignore                  # Git ignore rules
-├── CHANGELOG.md                # Project changelog
-├── CLAUDE.md                   # Engineering standards
-├── CODE_OF_CONDUCT.md          # Contributor Covenant
-├── LICENSE                     # Apache License 2.0
-├── README.md                   # Project documentation
-└── SECURITY.md                 # Vulnerability reporting
+│   ├── types.ts              # Shared TypeScript types
+│   ├── App.tsx               # Root application component
+│   ├── main.tsx              # Entry point
+│   └── index.css             # Tailwind imports + design tokens
+├── .editorconfig             # Editor formatting rules
+├── .gitignore                # Git ignore rules
+├── .github/workflows/ci.yml  # CI pipeline
+├── CLAUDE.md                 # Engineering standards
+├── CHANGELOG.md              # Project changelog
+├── CODE_OF_CONDUCT.md        # Contributor Covenant
+├── LICENSE                   # Apache License 2.0
+├── SECURITY.md               # Vulnerability reporting
+└── tasks/
+    ├── lessons.md            # Accumulated development lessons
+    └── todo.md               # Active task tracking
 ```
 
 ## Design System

@@ -8,10 +8,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
-- Remove duplicate `.DS_Store` entry in `.gitignore` ([#3](https://github.com/SeanVasey/SafariServe/issues/3))
-- Add enforcement contact email to `CODE_OF_CONDUCT.md` ([#4](https://github.com/SeanVasey/SafariServe/issues/4))
-- Update project structure diagram in `README.md` to include `.editorconfig`, `.gitignore`, and `README.md` ([#5](https://github.com/SeanVasey/SafariServe/issues/5))
-- Add security contact email to `SECURITY.md` ([#6](https://github.com/SeanVasey/SafariServe/issues/6))
+- Remove duplicate `.DS_Store` entry in `.gitignore` (#3)
+- Add security contact email (`sean@vasey.audio`) to `SECURITY.md` (#6)
+- Add enforcement contact email to `CODE_OF_CONDUCT.md` (#4)
+- Add missing `.editorconfig` and `.gitignore` to README project structure (#5)
+- Add missing `apple-touch-icon.png` (180x180) for PWA iOS support
+- Fix clipboard feedback in Shortcut Generator — "Copied!" only shows on success
+- Fix `window.open` calls to use `noopener,noreferrer` for security
+- Add URL protocol validation to prevent `javascript:` injection
+- Fix deprecated ESLint `--ext` flag for ESLint 9 flat config
+
+### Changed
+
+- Replace non-functional Share/Settings tabs with functional Generator tab in Quick Actions bar
+- Use semantic `<header>` element in Header component
+- Use semantic `<ul>/<li>` list elements in History panel
+- Use stable `url` key instead of `timestamp` in History list rendering
+- Add `role="list"` to generated steps list for VoiceOver compatibility
+- Add `aria-label` to template buttons for screen readers
+- Improve type safety: `addToHistory` now accepts `MediaType` instead of `string`
+- Remove dead favorites code (`loadFavorites`, `saveFavorites`, `toggleFavorite`) from storage utils
+- Make `saveHistory` private (internal implementation detail)
+- Add non-array JSON guard to `loadHistory` parsing
+- Add apple-touch-icon to PWA manifest icons array
+- Update tests to match component changes (35 tests, all passing)
 
 ## [1.0.0] - 2026-03-02
 
@@ -30,7 +50,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Dark glassmorphism design system with cyan/teal/blue accents
 - PWA manifest with standalone display mode
 - Custom SVG favicon (compass rose with relay arrow)
-- Vitest test suite: 37 tests across 3 files (App, detectMediaType, storage)
+- Vitest test suite across 3 files (App, detectMediaType, storage)
 - ESLint 9 + TypeScript ESLint with zero-warning policy
 - GitHub Actions CI pipeline (lint, typecheck, test, build)
 

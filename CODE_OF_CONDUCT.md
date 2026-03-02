@@ -32,12 +32,8 @@ Examples of unacceptable behavior:
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the project maintainers at **safariserve@vaseyai.com**. All
-complaints will be reviewed and investigated promptly and fairly.
-
-All reports will be kept confidential. Project maintainers who do not follow
-or enforce the Code of Conduct in good faith may face temporary or permanent
-repercussions as determined by other members of the project's leadership.
+reported to the project maintainers at [sean@vasey.audio](mailto:sean@vasey.audio). All complaints will be reviewed and
+investigated promptly and fairly.
 
 ## Attribution
 
