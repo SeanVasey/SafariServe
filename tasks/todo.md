@@ -1,6 +1,17 @@
 # Task Plan
 
-## Current Session: GitHub Pages Load Fix + Deployment Hardening
+## Current Session: Fix GitHub Pages Deployment (Round 2)
+
+- [x] Full codebase audit — lint, typecheck, tests, build all pass
+- [x] Investigate GitHub Pages deployment status via API — workflows succeed but site inaccessible
+- [x] Add `public/.nojekyll` to disable Jekyll processing (common cause of blank GitHub Pages)
+- [x] Replace `loadEnv()` with `process.env.BASE_PATH` in `vite.config.ts` for reliable CI env resolution
+- [x] Add SPA `404.html` fallback step in deploy workflow
+- [x] Update CHANGELOG, README project structure, and task tracking
+- [x] Run full verification suite (lint, typecheck, test, build with BASE_PATH)
+- [x] Commit and push to feature branch
+
+## Previous Session: GitHub Pages Load Fix + Deployment Hardening
 
 - [x] Review `tasks/lessons.md` and current repo state
 - [x] Reproduce/triangulate deployment issue by auditing build and asset path configuration

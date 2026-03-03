@@ -81,6 +81,7 @@ SafariServe/
 │   └── ci.yml                  # CI pipeline (lint, typecheck, test, build)
 │   └── deploy-pages.yml        # GitHub Pages build + deployment workflow
 ├── public/
+│   ├── .nojekyll               # Disables Jekyll processing on GitHub Pages
 │   ├── apple-touch-icon.png    # iOS home screen icon (180x180)
 │   ├── favicon.svg             # App icon (compass rose motif)
 │   └── manifest.json           # PWA manifest
