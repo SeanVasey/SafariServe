@@ -10,14 +10,14 @@ describe("detectMediaType", () => {
 
   it("detects webpages for generic URLs", () => {
     expect(detectMediaType("https://example.com")).toEqual(
-      expect.objectContaining({ type: "Webpage", shortcutPrefix: "🌐" }),
+      expect.objectContaining({ type: "Webpage", shortcutPrefix: "globe" }),
     );
   });
 
   it("detects video for YouTube URLs", () => {
     expect(
       detectMediaType("https://www.youtube.com/watch?v=abc123"),
-    ).toEqual(expect.objectContaining({ type: "Video", shortcutPrefix: "🎬" }));
+    ).toEqual(expect.objectContaining({ type: "Video", shortcutPrefix: "streaming" }));
   });
 
   it("detects video for Vimeo URLs", () => {
@@ -34,7 +34,7 @@ describe("detectMediaType", () => {
 
   it("detects audio for mp3 files", () => {
     expect(detectMediaType("https://example.com/song.mp3")).toEqual(
-      expect.objectContaining({ type: "Audio", shortcutPrefix: "🎵" }),
+      expect.objectContaining({ type: "Audio", shortcutPrefix: "music" }),
     );
   });
 
@@ -52,7 +52,7 @@ describe("detectMediaType", () => {
 
   it("detects images for jpg files", () => {
     expect(detectMediaType("https://example.com/photo.jpg")).toEqual(
-      expect.objectContaining({ type: "Image", shortcutPrefix: "🖼️" }),
+      expect.objectContaining({ type: "Image", shortcutPrefix: "globe" }),
     );
   });
 
@@ -64,7 +64,7 @@ describe("detectMediaType", () => {
 
   it("detects documents for PDF files", () => {
     expect(detectMediaType("https://example.com/report.pdf")).toEqual(
-      expect.objectContaining({ type: "Document", shortcutPrefix: "📄" }),
+      expect.objectContaining({ type: "Document", shortcutPrefix: "business" }),
     );
   });
 
@@ -72,7 +72,7 @@ describe("detectMediaType", () => {
     expect(
       detectMediaType("https://apps.apple.com/us/app/safari/id1146562112"),
     ).toEqual(
-      expect.objectContaining({ type: "App/Deep-Link", shortcutPrefix: "📱" }),
+      expect.objectContaining({ type: "App/Deep-Link", shortcutPrefix: "coding" }),
     );
   });
 

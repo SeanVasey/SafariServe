@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Sparkles,
   ChevronDown,
@@ -6,6 +6,7 @@ import {
   Copy,
   CheckCircle2,
 } from "lucide-react";
+import { ICON_REGISTRY, ICON_IDS, getCategoryIcon } from "../utils/iconRegistry";
 
 interface Props {
   url: string;
@@ -15,8 +16,6 @@ interface Props {
   onShortcutIconChange: (icon: string) => void;
 }
 
-const ICON_OPTIONS = ["🌐", "🎬", "🎵", "📄", "📱", "⭐", "🚀"];
-
 export function ShortcutGeneratorPanel({
   url,
   shortcutName,
@@ -25,28 +24,72 @@ export function ShortcutGeneratorPanel({
   onShortcutIconChange,
 }: Props) {
   const [showCopied, setShowCopied] = useState(false);
+  const [iconPickerOpen, setIconPickerOpen] = useState(false);
+  const [installMessage, setInstallMessage] = useState<string | null>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  // Close icon picker on outside click
+  useEffect(() => {
+    if (!iconPickerOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
+        setIconPickerOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [iconPickerOpen]);
 
   const handleCopySteps = () => {
+    const iconLabel = getCategoryIcon(shortcutIcon).label;
     const steps = [
       "SAFARISERVE AUTOMATION STEPS:",
       `1. Open URL: ${url}`,
       "2. Pass to Safari via Share Sheet",
       "3. Wait 2 seconds for load",
       "4. Trigger 'Add to Home Screen'",
-      `Name: ${shortcutIcon} ${shortcutName}`,
+      `Name: [${iconLabel}] ${shortcutName}`,
     ].join("\n");
+
     navigator.clipboard.writeText(steps).then(() => {
       setShowCopied(true);
       setTimeout(() => setShowCopied(false), 2000);
     }).catch(() => {
-      // Clipboard API may fail in non-HTTPS contexts
+      // Fallback for non-HTTPS contexts
+      const textarea = document.createElement("textarea");
+      textarea.value = steps;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        setShowCopied(true);
+        setTimeout(() => setShowCopied(false), 2000);
+      } catch {
+        window.prompt("Copy the steps below:", steps);
+      }
+      document.body.removeChild(textarea);
     });
   };
 
   const handleInstallShortcut = () => {
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    if (!isIOS) {
+      setInstallMessage("This feature requires an iPhone or iPad with the Shortcuts app.");
+      setTimeout(() => setInstallMessage(null), 4000);
+      return;
+    }
+
     const encodedName = encodeURIComponent(shortcutName);
     window.open(`shortcuts://create-shortcut?name=${encodedName}`, "_blank", "noopener,noreferrer");
   };
+
+  const selectedEntry = getCategoryIcon(shortcutIcon);
+  const SelectedIconComponent = selectedEntry.component;
 
   return (
     <div
@@ -61,24 +104,66 @@ export function ShortcutGeneratorPanel({
 
       <div className="space-y-4 mb-6">
         <div className="flex gap-3">
-          <div className="w-16">
+          {/* Custom icon picker */}
+          <div className="w-16" ref={pickerRef}>
             <label className="block text-[10px] uppercase text-safari-text/50 font-bold mb-1 ml-1">
               Icon
             </label>
             <div className="relative">
-              <select
-                value={shortcutIcon}
-                onChange={(e) => onShortcutIconChange(e.target.value)}
-                className="w-full bg-safari-surface/80 border border-safari-cyan/20 rounded-xl px-2 py-2.5 text-xl appearance-none text-center focus:outline-none focus:border-safari-cyan"
-                aria-label="Shortcut icon"
+              <button
+                type="button"
+                onClick={() => setIconPickerOpen((o) => !o)}
+                className="w-full bg-safari-surface/80 border border-safari-cyan/20 rounded-xl px-2 py-2.5 flex items-center justify-center gap-1 focus:outline-none focus:border-safari-cyan transition-colors"
+                aria-label="Choose shortcut icon"
+                aria-expanded={iconPickerOpen}
               >
-                {ICON_OPTIONS.map((icon) => (
-                  <option key={icon} value={icon}>
-                    {icon}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="w-3 h-3 text-safari-cyan absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <SelectedIconComponent
+                  className="w-5 h-5"
+                  style={{ color: selectedEntry.color }}
+                />
+                <ChevronDown className="w-3 h-3 text-safari-cyan" />
+              </button>
+
+              {iconPickerOpen && (
+                <div
+                  className="absolute top-full left-0 mt-1 w-56 bg-safari-surface border border-safari-cyan/20 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] p-2 z-50 grid grid-cols-4 gap-1"
+                  role="listbox"
+                  aria-label="Icon options"
+                >
+                  {ICON_IDS.map((id) => {
+                    const entry = ICON_REGISTRY[id]!;
+                    const IconComp = entry.component;
+                    const isSelected = id === shortcutIcon;
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        role="option"
+                        aria-selected={isSelected}
+                        aria-label={entry.label}
+                        title={entry.label}
+                        onClick={() => {
+                          onShortcutIconChange(id);
+                          setIconPickerOpen(false);
+                        }}
+                        className={`flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-colors ${
+                          isSelected
+                            ? "bg-safari-cyan/15 border border-safari-cyan/30"
+                            : "hover:bg-safari-cyan/10 border border-transparent"
+                        }`}
+                      >
+                        <IconComp
+                          className="w-5 h-5"
+                          style={{ color: entry.color }}
+                        />
+                        <span className="text-[8px] text-safari-text/60 font-medium leading-tight">
+                          {entry.label}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex-1">
@@ -123,8 +208,12 @@ export function ShortcutGeneratorPanel({
               <span className="text-safari-cyan/50 select-none">4.</span>
               <span>
                 Add to Home Screen as{" "}
-                <span className="bg-safari-surface px-1.5 py-0.5 rounded text-safari-text border border-safari-cyan/20">
-                  {shortcutIcon} {shortcutName}
+                <span className="bg-safari-surface px-1.5 py-0.5 rounded text-safari-text border border-safari-cyan/20 inline-flex items-center gap-1">
+                  <SelectedIconComponent
+                    className="w-3.5 h-3.5 inline-block"
+                    style={{ color: selectedEntry.color }}
+                  />
+                  {shortcutName}
                 </span>
               </span>
             </li>
@@ -152,6 +241,12 @@ export function ShortcutGeneratorPanel({
           {showCopied ? "Copied!" : "Copy Steps"}
         </button>
       </div>
+
+      {installMessage && (
+        <p className="mt-3 text-xs text-safari-text/60 text-center">
+          {installMessage}
+        </p>
+      )}
     </div>
   );
 }

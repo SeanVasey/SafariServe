@@ -13,13 +13,26 @@ const DEFAULT_MEDIA: MediaInfo = detectMediaType("");
 
 const SAFE_PROTOCOLS = ["http:", "https:", "shortcuts:"];
 
+function normalizeUrl(raw: string): string {
+  const trimmed = raw.trim();
+  if (!trimmed) return trimmed;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 export default function App() {
   const [url, setUrl] = useState("");
   const [mediaInfo, setMediaInfo] = useState<MediaInfo>(DEFAULT_MEDIA);
   const [shortcutName, setShortcutName] = useState("My Shortcut");
-  const [shortcutIcon, setShortcutIcon] = useState("🌐");
+  const [shortcutIcon, setShortcutIcon] = useState("globe");
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [activeTab, setActiveTab] = useState<TabId>("generator");
+  const [toast, setToast] = useState<string | null>(null);
+
+  function showToast(msg: string) {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  }
 
   // Read ?url= param on mount + load persisted data
   useEffect(() => {
@@ -33,27 +46,36 @@ export default function App() {
   // Auto-detect media type on URL change
   useEffect(() => {
     if (url) {
-      const info = detectMediaType(url);
+      const normalized = normalizeUrl(url);
+      const info = detectMediaType(normalized);
       setMediaInfo(info);
       setShortcutIcon(info.shortcutPrefix);
-      setShortcutName(`Open ${extractDomain(url)}`);
+      setShortcutName(`Open ${extractDomain(normalized)}`);
     } else {
       setMediaInfo(DEFAULT_MEDIA);
       setShortcutName("My Shortcut");
-      setShortcutIcon("🌐");
+      setShortcutIcon("globe");
     }
   }, [url]);
 
   const handleOpenSafari = useCallback(() => {
     if (!url) return;
+    const normalized = normalizeUrl(url);
     try {
-      const parsed = new URL(url);
-      if (!SAFE_PROTOCOLS.includes(parsed.protocol)) return;
+      const parsed = new URL(normalized);
+      if (!SAFE_PROTOCOLS.includes(parsed.protocol)) {
+        showToast("Unsupported protocol. Use http or https.");
+        return;
+      }
     } catch {
+      showToast("Invalid URL. Please check and try again.");
       return;
     }
-    setHistory((prev) => addToHistory(url, mediaInfo.type, prev));
-    window.open(url, "_blank", "noopener,noreferrer");
+    setHistory((prev) => addToHistory(normalized, mediaInfo.type, prev));
+    const win = window.open(normalized, "_blank", "noopener,noreferrer");
+    if (!win) {
+      showToast("Popup blocked. Allow popups for this site.");
+    }
   }, [url, mediaInfo.type]);
 
   const handleScrollToGenerator = useCallback(() => {
@@ -68,6 +90,12 @@ export default function App() {
 
   const handleHistorySelect = useCallback((selectedUrl: string) => {
     setUrl(selectedUrl);
+    setActiveTab("generator");
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleSelectTemplate = useCallback((defaultUrl: string) => {
+    setUrl(defaultUrl);
     setActiveTab("generator");
     window.scrollTo(0, 0);
   }, []);
@@ -120,9 +148,18 @@ export default function App() {
           {activeTab === "history" && (
             <HistoryPanel history={history} onSelect={handleHistorySelect} />
           )}
-          {activeTab === "templates" && <TemplatesPanel />}
+          {activeTab === "templates" && (
+            <TemplatesPanel onSelectTemplate={handleSelectTemplate} />
+          )}
         </div>
       </div>
+
+      {/* Toast notification */}
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 bg-safari-surface border border-safari-cyan/20 rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.5)] text-sm text-safari-text/90 animate-[fadeIn_0.2s_ease-out]">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

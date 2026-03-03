@@ -1,9 +1,22 @@
 import type { LucideIcon } from "lucide-react";
 
+export type IconId =
+  | "globe"
+  | "news"
+  | "sports"
+  | "banking"
+  | "coding"
+  | "ai"
+  | "streaming"
+  | "music"
+  | "business"
+  | "stocks"
+  | "email";
+
 export interface MediaInfo {
   type: MediaType;
   icon: LucideIcon;
-  shortcutPrefix: string;
+  shortcutPrefix: IconId;
 }
 
 export type MediaType =
