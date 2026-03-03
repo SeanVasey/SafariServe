@@ -9,7 +9,7 @@ import {
 import type { MediaInfo } from "../types";
 
 export function detectMediaType(url: string): MediaInfo {
-  if (!url) return { type: "None", icon: Globe, shortcutPrefix: "🌐" };
+  if (!url) return { type: "None", icon: Globe, shortcutPrefix: "globe" };
 
   const lowerUrl = url.toLowerCase();
 
@@ -19,7 +19,7 @@ export function detectMediaType(url: string): MediaInfo {
     lowerUrl.includes("vimeo.com") ||
     lowerUrl.includes("youtu.be")
   ) {
-    return { type: "Video", icon: Film, shortcutPrefix: "🎬" };
+    return { type: "Video", icon: Film, shortcutPrefix: "streaming" };
   }
 
   if (
@@ -27,25 +27,25 @@ export function detectMediaType(url: string): MediaInfo {
     lowerUrl.includes("spotify.com") ||
     lowerUrl.includes("music.apple.com")
   ) {
-    return { type: "Audio", icon: Music, shortcutPrefix: "🎵" };
+    return { type: "Audio", icon: Music, shortcutPrefix: "music" };
   }
 
   if (lowerUrl.match(/\.(jpg|jpeg|png|gif|webp)($|\?)/)) {
-    return { type: "Image", icon: ImageIcon, shortcutPrefix: "🖼️" };
+    return { type: "Image", icon: ImageIcon, shortcutPrefix: "globe" };
   }
 
   if (lowerUrl.match(/\.(pdf|doc|docx|txt)($|\?)/)) {
-    return { type: "Document", icon: FileText, shortcutPrefix: "📄" };
+    return { type: "Document", icon: FileText, shortcutPrefix: "business" };
   }
 
   if (
     lowerUrl.startsWith("shortcuts://") ||
     lowerUrl.includes("apps.apple.com")
   ) {
-    return { type: "App/Deep-Link", icon: Smartphone, shortcutPrefix: "📱" };
+    return { type: "App/Deep-Link", icon: Smartphone, shortcutPrefix: "coding" };
   }
 
-  return { type: "Webpage", icon: Globe, shortcutPrefix: "🌐" };
+  return { type: "Webpage", icon: Globe, shortcutPrefix: "globe" };
 }
 
 export function extractDomain(url: string): string {

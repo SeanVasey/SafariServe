@@ -44,6 +44,7 @@ export function UrlSubmissionPanel({
         <button
           onClick={onOpenSafari}
           disabled={!url}
+          title={!url ? "Enter a URL above first" : undefined}
           className="absolute right-2 top-2 bottom-2 aspect-square bg-safari-cyan/10 hover:bg-safari-cyan/20 disabled:opacity-50 text-safari-cyan rounded-lg flex items-center justify-center transition-colors"
           aria-label="Open in Safari"
         >
@@ -67,6 +68,7 @@ export function UrlSubmissionPanel({
         <button
           onClick={onOpenSafari}
           disabled={!url}
+          title={!url ? "Enter a URL above first" : undefined}
           className="bg-safari-surface/80 backdrop-blur-md border border-safari-cyan/20 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all duration-200 py-3 disabled:opacity-50 text-safari-text text-sm font-semibold"
         >
           <Compass className="w-4 h-4 text-safari-cyan" />
@@ -75,6 +77,7 @@ export function UrlSubmissionPanel({
         <button
           onClick={onScrollToGenerator}
           disabled={!url}
+          title={!url ? "Enter a URL above first" : undefined}
           className="bg-gradient-to-r from-safari-blue to-safari-teal text-white rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(0,210,255,0.2)] font-medium py-3 disabled:opacity-50 text-sm"
         >
           <PlusSquare className="w-4 h-4" />
