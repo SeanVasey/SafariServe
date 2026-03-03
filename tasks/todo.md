@@ -1,5 +1,15 @@
 # Task Plan
 
+## Current Session: Follow-up Fix for URI Normalization Edge Case
+
+- [x] Re-review previous URI normalization patch for edge cases
+- [x] Fix host:port heuristic so numeric custom-scheme payloads are not rewritten
+- [x] Add regression test for `tel:` numeric payload behavior
+- [x] Update CHANGELOG unreleased notes
+- [x] Run verification suite (lint, typecheck, test, build)
+- [ ] Configure git remote and push branch
+- [ ] Commit follow-up patch and create/update PR
+
 ## Current Session: Fix URI Scheme Normalization Regression
 
 - [x] Review existing URL normalization and Safari-open validation flow

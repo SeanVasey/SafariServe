@@ -146,4 +146,26 @@ describe("App", () => {
 
     openSpy.mockRestore();
   });
+
+
+  it("does not rewrite numeric non-http(s) schemes like tel:", async () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+
+    render(<App />);
+    const input = screen.getByLabelText("URL or content");
+    fireEvent.change(input, {
+      target: { value: "tel:1234567890" },
+    });
+
+    fireEvent.click(screen.getAllByText("Open in Safari")[0]!);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Unsupported protocol. Use http or https."),
+      ).toBeInTheDocument();
+    });
+    expect(openSpy).not.toHaveBeenCalled();
+
+    openSpy.mockRestore();
+  });
 });

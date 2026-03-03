@@ -42,3 +42,8 @@ Accumulated patterns from corrections and mistakes. Reviewed at the start of eac
 - **README project structure accuracy**: When documenting project structure, list ALL root-level files including build/config files (`index.html`, `package.json`, tsconfigs, vite/vitest configs, eslint config). Don't duplicate entries that already appear in the tree hierarchy (e.g., `ci.yml` was listed both inside `.github/workflows/` tree and again as a standalone root entry).
 - **Stale task tracking**: Mark todo items as complete when their associated PRs are merged. Unchecked items in completed sessions create confusion about actual state.
 - **Version consistency across files**: When bumping version, update ALL locations: `package.json`, Header component badge, test assertions that check the version string, and CHANGELOG.
+
+## 2026-03-03 — URI Normalization Follow-up (Reviewer Correction)
+
+- **Avoid over-broad host:port heuristics**: Detecting `<token>:<digits>` as host:port can misclassify numeric custom-scheme payloads (`tel:123...`) and rewrite them incorrectly. Host:port exceptions must be tightly scoped to actual host-like patterns (e.g., `localhost`, IPv4/IPv6, dotted domains).
+- **Regression tests should include numeric custom schemes**: When fixing URI normalization, include cases like `tel:` in addition to `mailto:` to catch false positives in scheme-vs-host parsing.
