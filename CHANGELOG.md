@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix GitHub Pages loading by making Vite base path configurable via `BASE_PATH` (defaults to `/` for local/Vercel)
+- Fix PWA manifest pathing for subpath deployments by using relative icon URLs and `start_url: "."`
+
+### Added
+
+- Add dedicated GitHub Pages deployment workflow (`deploy-pages.yml`) that builds with `BASE_PATH=/SafariServe/` and deploys `dist/`
+- Add deployment documentation for GitHub Pages and Vercel plus a Pages-specific build command in README
+
 ## [1.1.1] - 2026-03-02
 
 ### Fixed

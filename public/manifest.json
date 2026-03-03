@@ -2,18 +2,18 @@
   "name": "SafariServe",
   "short_name": "SafariServe",
   "description": "Your gateway to Safari, from anywhere.",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#0A0E14",
   "theme_color": "#0A0E14",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     },
     {
-      "src": "/apple-touch-icon.png",
+      "src": "apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
     }
