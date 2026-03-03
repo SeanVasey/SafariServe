@@ -21,7 +21,7 @@ export function Header() {
           SafariServe
         </h1>
         <span className="px-2 py-0.5 rounded-full bg-safari-cyan/10 border border-safari-cyan/20 text-safari-cyan text-[10px] font-bold ml-1 tracking-wider">
-          v1.2.0
+          v1.2.1
         </span>
       </div>
       <p className="text-safari-text/50 text-sm font-medium tracking-wide">

@@ -16,7 +16,15 @@ const SAFE_PROTOCOLS = ["http:", "https:", "shortcuts:"];
 function normalizeUrl(raw: string): string {
   const trimmed = raw.trim();
   if (!trimmed) return trimmed;
-  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(trimmed)) return trimmed;
+  const schemeMatch = /^([a-zA-Z][a-zA-Z0-9+.-]*):(.*)$/.exec(trimmed);
+  if (schemeMatch) {
+    const remainder = schemeMatch[2] ?? "";
+
+    // Keep host:port inputs (e.g., localhost:3000) on the https normalization path.
+    if (!/^\d+(?:[/?#]|$)/.test(remainder)) {
+      return trimmed;
+    }
+  }
   return `https://${trimmed}`;
 }
 
