@@ -4,12 +4,14 @@ Accumulated patterns from corrections and mistakes. Reviewed at the start of eac
 
 ---
 
-## 2026-03-03 — GitHub Pages Deployment Fix (Round 2)
+## 2026-03-03 — v1.2.0 Deployment Fix, Version Sync & README Overhaul
 
 - **Always add `.nojekyll` to GitHub Pages sites**: GitHub Pages runs Jekyll by default, which can silently interfere with static file serving. Every non-Jekyll GitHub Pages site must include a `.nojekyll` file in the deploy root. Add it to `public/` so Vite copies it to `dist/`.
 - **Use `process.env` directly in Vite config, not `loadEnv()`**: `loadEnv()` is designed for `.env` file loading and application-level env vars. For build-time config that reads system env vars (e.g., CI `BASE_PATH`), `process.env.VAR` is more direct and reliable. The `loadEnv` function introduces an unnecessary abstraction layer.
 - **Always add `404.html` for SPAs on GitHub Pages**: GitHub Pages serves its own 404 page for unmatched routes. Copy `index.html` to `404.html` in the deploy step so the SPA handles all routes. This is critical for apps using query parameters (`?url=`), bookmarks, or client-side routing.
 - **Verify deployments end-to-end, not just CI pass**: A successful GitHub Actions workflow doesn't guarantee the site works. Check (1) Pages source is set to "GitHub Actions" in repo settings, (2) the environment `github-pages` exists, (3) the site is actually accessible after deployment.
+- **Version every CHANGELOG [Unreleased] section promptly**: Don't let deployment fixes or feature work accumulate in `[Unreleased]`. Cut a version (bump package.json, Header badge, tests) so the CHANGELOG reflects what's actually shipped.
+- **Keep version badge in sync across 4 locations**: `package.json`, `Header.tsx` badge, test assertion in `App.test.tsx`, and `CHANGELOG.md` release heading. Miss one and you have a versioning bug.
 
 ## 2026-03-02 — GitHub Issues Fix Session
 

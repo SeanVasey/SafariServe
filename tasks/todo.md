@@ -1,14 +1,25 @@
 # Task Plan
 
-## Current Session: Fix GitHub Pages Deployment (Round 2)
+## Current Session: v1.2.0 — Deployment Fix, Version Sync & README Overhaul
 
-- [x] Full codebase audit — lint, typecheck, tests, build all pass
-- [x] Investigate GitHub Pages deployment status via API — workflows succeed but site inaccessible
-- [x] Add `public/.nojekyll` to disable Jekyll processing (common cause of blank GitHub Pages)
-- [x] Replace `loadEnv()` with `process.env.BASE_PATH` in `vite.config.ts` for reliable CI env resolution
+- [x] Full codebase audit — lint, typecheck, tests, build all pass; 0 vulnerabilities
+- [x] Investigate GitHub Pages deployment — workflows succeed but site inaccessible
+- [x] Add `public/.nojekyll` to disable Jekyll processing on GitHub Pages
+- [x] Replace `loadEnv()` with `process.env.BASE_PATH` in `vite.config.ts`
 - [x] Add SPA `404.html` fallback step in deploy workflow
-- [x] Update CHANGELOG, README project structure, and task tracking
-- [x] Run full verification suite (lint, typecheck, test, build with BASE_PATH)
+- [x] Version bump: `1.1.1` → `1.2.0` across package.json, Header.tsx, App.test.tsx, CHANGELOG
+- [x] Create SVG banner (`docs/banner.svg`) matching dark glassmorphism branding
+- [x] Overhaul README with banner image, shields.io badges, improved deployment docs
+- [x] Verify all workflows (CI, deploy-pages) are correct
+- [x] Verify 0 npm audit vulnerabilities, all deps within semver ranges
+- [x] Update CHANGELOG with v1.2.0 release notes
+- [x] Update task tracking and lessons learned
+- [x] Run full verification suite (lint, typecheck, test, build)
+- [x] Commit and create PR to main
+
+## Previous Session: Fix GitHub Pages Deployment (Round 2)
+
+- [x] Add `public/.nojekyll`, replace `loadEnv()`, add 404.html fallback
 - [x] Commit and push to feature branch
 
 ## Previous Session: GitHub Pages Load Fix + Deployment Hardening
@@ -36,7 +47,7 @@
 - [x] Clean up stale unchecked item from previous v1.1.0 session
 - [x] Update CHANGELOG with v1.1.1 fixes
 - [x] Re-run all verification checks
-- [ ] Commit and push to feature branch
+- [x] Commit and push to feature branch
 
 ## Previous Session: v1.1.0 — Issue Fixes & Code Quality
 
