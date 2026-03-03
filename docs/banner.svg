@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#060A10"/>
+      <stop offset="50%" stop-color="#0A0E14"/>
+      <stop offset="100%" stop-color="#0D1420"/>
+    </linearGradient>
+    <linearGradient id="glow-cyan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#00D2FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="glow-blue" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0077B6" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#0077B6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF7B54"/>
+      <stop offset="100%" stop-color="#FFB26B"/>
+    </linearGradient>
+    <linearGradient id="cyan-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00D2FF"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <radialGradient id="ambient-top" cx="30%" cy="0%" r="60%">
+      <stop offset="0%" stop-color="#0077B6" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0077B6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ambient-bottom" cx="70%" cy="100%" r="50%">
+      <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#00D2FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <filter id="icon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <rect width="1200" height="400" fill="url(#ambient-top)"/>
+  <rect width="1200" height="400" fill="url(#ambient-bottom)"/>
+
+  <!-- Ambient glow orbs -->
+  <ellipse cx="250" cy="80" rx="300" ry="200" fill="#0077B6" opacity="0.06" filter="url(#blur-glow)"/>
+  <ellipse cx="950" cy="350" rx="250" ry="180" fill="#00D2FF" opacity="0.04" filter="url(#blur-glow)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03" stroke="#00D2FF" stroke-width="0.5">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="400"/>
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="800" y1="0" x2="800" y2="400"/>
+    <line x1="1000" y1="0" x2="1000" y2="400"/>
+  </g>
+
+  <!-- Compass icon glow -->
+  <circle cx="510" cy="200" r="40" fill="#00D2FF" opacity="0.15" filter="url(#icon-glow)"/>
+
+  <!-- Compass icon background -->
+  <rect x="478" y="168" width="64" height="64" rx="16" fill="#111820" stroke="#00D2FF" stroke-opacity="0.3" stroke-width="1.5"/>
+
+  <!-- Compass icon -->
+  <g transform="translate(510, 200)">
+    <!-- Compass circle -->
+    <circle r="18" fill="none" stroke="#00D2FF" stroke-width="1.5" stroke-opacity="0.6"/>
+    <!-- Compass needle N -->
+    <path d="M0,-16 L4,-4 L0,-6 L-4,-4 Z" fill="#00D2FF" opacity="0.9"/>
+    <!-- Compass needle S -->
+    <path d="M0,16 L4,4 L0,6 L-4,4 Z" fill="#00B4D8" opacity="0.6"/>
+    <!-- Compass needle E -->
+    <path d="M16,0 L4,4 L6,0 L4,-4 Z" fill="#00B4D8" opacity="0.5"/>
+    <!-- Compass needle W -->
+    <path d="M-16,0 L-4,4 L-6,0 L-4,-4 Z" fill="#0077B6" opacity="0.5"/>
+    <!-- Center dot -->
+    <circle r="2" fill="#00D2FF"/>
+  </g>
+
+  <!-- Arrow overlay on compass -->
+  <g transform="translate(530, 180)">
+    <path d="M0,8 L8,0 M8,0 L4,0 M8,0 L8,4" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- VASEY/AI PRESENTS -->
+  <text x="600" y="118" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="4" fill="url(#accent)">VASEY/AI PRESENTS</text>
+
+  <!-- SafariServe title -->
+  <text x="600" y="210" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="48" font-weight="900" fill="#E8EDF2" letter-spacing="-0.5">SafariServe</text>
+
+  <!-- Version badge -->
+  <g transform="translate(745, 185)">
+    <rect width="52" height="22" rx="11" fill="#00D2FF" fill-opacity="0.1" stroke="#00D2FF" stroke-opacity="0.2" stroke-width="1"/>
+    <text x="26" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#00D2FF" letter-spacing="0.5">v1.2.0</text>
+  </g>
+
+  <!-- Tagline -->
+  <text x="600" y="252" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" fill="#E8EDF2" fill-opacity="0.5" letter-spacing="0.5">Your gateway to Safari, from anywhere.</text>
+
+  <!-- Bottom accent line -->
+  <rect x="460" y="290" width="280" height="1" rx="0.5" fill="url(#cyan-grad)" opacity="0.2"/>
+
+  <!-- Tech badges row -->
+  <g transform="translate(600, 320)" text-anchor="middle">
+    <g transform="translate(-180, 0)">
+      <rect x="-36" y="-10" width="72" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
+      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">React 19</text>
+    </g>
+    <g transform="translate(-60, 0)">
+      <rect x="-45" y="-10" width="90" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
+      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">TypeScript</text>
+    </g>
+    <g transform="translate(60, 0)">
+      <rect x="-48" y="-10" width="96" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
+      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">Tailwind CSS 4</text>
+    </g>
+    <g transform="translate(168, 0)">
+      <rect x="-30" y="-10" width="60" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
+      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">Vite 6</text>
+    </g>
+  </g>
+
+  <!-- Bottom border accent -->
+  <rect x="0" y="398" width="1200" height="2" fill="url(#cyan-grad)" opacity="0.15"/>
+</svg>

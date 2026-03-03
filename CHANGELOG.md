@@ -6,19 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-03
+
 ### Fixed
 
-- Fix GitHub Pages loading by making Vite base path configurable via `BASE_PATH` (defaults to `/` for local/Vercel)
+- Fix GitHub Pages deployment — site was not loading due to missing `.nojekyll` file; Jekyll processing interfered with static asset serving
+- Fix Vite base path configuration — use `process.env.BASE_PATH` directly instead of `loadEnv()` for reliable CI environment variable resolution
+- Fix GitHub Pages asset pathing — make Vite base path configurable via `BASE_PATH` env var (defaults to `/` for local/Vercel)
 - Fix PWA manifest pathing for subpath deployments by using relative icon URLs and `start_url: "."`
-- Fix GitHub Pages blank page caused by missing `.nojekyll` — Jekyll processing interfered with static asset serving
-- Fix Vite config to use `process.env.BASE_PATH` directly instead of `loadEnv()` for reliable CI env var resolution
+- Fix version consistency across all files (package.json, Header component, tests, CHANGELOG)
 
 ### Added
 
-- Add dedicated GitHub Pages deployment workflow (`deploy-pages.yml`) that builds with `BASE_PATH=/SafariServe/` and deploys `dist/`
-- Add deployment documentation for GitHub Pages and Vercel plus a Pages-specific build command in README
+- Add dedicated GitHub Pages deployment workflow (`deploy-pages.yml`) with `BASE_PATH=/SafariServe/` and `actions/deploy-pages@v4`
 - Add `.nojekyll` to `public/` to disable Jekyll processing on GitHub Pages
-- Add SPA `404.html` fallback in deploy workflow (copies `index.html` to `404.html`)
+- Add SPA `404.html` fallback in deploy workflow (copies `index.html` to `404.html` for proper route handling)
+- Add `@types/node` for typed `process.env` access in Vite config
+- Add README header banner image and shields.io badges
+- Add deployment documentation for GitHub Pages and Vercel in README
 
 ## [1.1.1] - 2026-03-02
 
