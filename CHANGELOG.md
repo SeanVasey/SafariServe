@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-03
+
 ### Fixed
 
 - Fix GitHub Pages loading by making Vite base path configurable via `BASE_PATH` (defaults to `/` for local/Vercel)
