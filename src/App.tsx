@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Header } from "./components/Header";
 import { UrlSubmissionPanel } from "./components/UrlSubmissionPanel";
 import { ShortcutGeneratorPanel } from "./components/ShortcutGeneratorPanel";
@@ -172,6 +173,8 @@ export default function App() {
           {toast}
         </div>
       )}
+
+      <SpeedInsights />
     </div>
   );
 }
