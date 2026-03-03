@@ -1,6 +1,19 @@
 # Task Plan
 
-## Current Session: v1.1.1 — Codebase Cleanup & Documentation Audit
+## Current Session: GitHub Pages Load Fix + Deployment Hardening
+
+- [x] Review `tasks/lessons.md` and current repo state
+- [x] Reproduce/triangulate deployment issue by auditing build and asset path configuration
+- [x] Update Vite config to support subpath deployments (GitHub Pages) while preserving local/Vercel behavior
+- [x] Fix PWA manifest paths/start URL for repo-subpath hosting
+- [x] Add GitHub Pages deployment workflow with CI-compatible build + artifact publish
+- [x] Update README deployment documentation for GitHub Pages and Vercel
+- [x] Update CHANGELOG with deployment fix details
+- [x] Run full verification suite (lint, typecheck, test, build)
+- [x] Capture UI screenshot of running app (not applicable: no visual component changes)
+- [x] Commit changes with conventional commit message
+
+## Previous Session: v1.1.1 — Codebase Cleanup & Documentation Audit
 
 - [x] Full codebase audit for merge conflicts, duplicates, and bad merges
 - [x] Run all verification checks (lint, typecheck, tests, build)
@@ -70,3 +83,10 @@
 - [x] Create `CODE_OF_CONDUCT.md` (Contributor Covenant)
 - [x] Update `README.md` with proper structure and project description
 - [x] Commit and push initialization to `claude/init-claude-md-ncO4c`
+
+
+## Review
+
+- Root cause identified: production bundle used `/` base, causing broken asset links on GitHub Pages subpath (`/SafariServe/`).
+- Mitigation implemented: environment-driven Vite base + Pages-specific deploy workflow + relative manifest paths.
+- Verification: local lint/typecheck/test/build and Pages-style build with `BASE_PATH=/SafariServe/`.

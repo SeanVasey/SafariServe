@@ -54,6 +54,12 @@ npm run dev
 npm run build
 ```
 
+To build for GitHub Pages (repo subpath deployment), set `BASE_PATH`:
+
+```bash
+BASE_PATH=/SafariServe/ npm run build
+```
+
 ### Test
 
 ```bash
@@ -73,6 +79,7 @@ npm run typecheck
 SafariServe/
 ├── .github/workflows/
 │   └── ci.yml                  # CI pipeline (lint, typecheck, test, build)
+│   └── deploy-pages.yml        # GitHub Pages build + deployment workflow
 ├── public/
 │   ├── apple-touch-icon.png    # iOS home screen icon (180x180)
 │   ├── favicon.svg             # App icon (compass rose motif)
@@ -133,6 +140,11 @@ SafariServe integrates with Apple Shortcuts via:
 3. **Home Screen Generator** — Create named, iconified shortcuts for the Home Screen
 
 URLs can be passed via the `?url=` query parameter for automated workflows.
+
+## Deployment
+
+- **GitHub Pages**: `.github/workflows/deploy-pages.yml` builds on `main` with `BASE_PATH=/SafariServe/` and deploys the `dist/` artifact to Pages.
+- **Vercel**: Works with the default build command (`npm run build`) and no `BASE_PATH` override.
 
 ## Contributing
 
