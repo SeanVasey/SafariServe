@@ -35,7 +35,7 @@ describe("App", () => {
     render(<App />);
     expect(screen.getByText("VASEY/AI PRESENTS")).toBeInTheDocument();
     expect(screen.getByText("SafariServe")).toBeInTheDocument();
-    expect(screen.getByText("v1.2.0")).toBeInTheDocument();
+    expect(screen.getByText("v1.2.1")).toBeInTheDocument();
     expect(
       screen.getByText("Your gateway to Safari, from anywhere."),
     ).toBeInTheDocument();
@@ -101,5 +101,71 @@ describe("App", () => {
       const matches = screen.getAllByDisplayValue("Open github.com");
       expect(matches.length).toBeGreaterThanOrEqual(1);
     });
+  });
+
+
+  it("rejects non-http(s) URI schemes without rewriting them", async () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+
+    render(<App />);
+    const input = screen.getByLabelText("URL or content");
+    fireEvent.change(input, {
+      target: { value: "mailto:test@example.com" },
+    });
+
+    fireEvent.click(screen.getAllByText("Open in Safari")[0]!);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Unsupported protocol. Use http or https."),
+      ).toBeInTheDocument();
+    });
+    expect(openSpy).not.toHaveBeenCalled();
+
+    openSpy.mockRestore();
+  });
+
+  it("keeps localhost:port inputs normalized to https", async () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+
+    render(<App />);
+    const input = screen.getByLabelText("URL or content");
+    fireEvent.change(input, {
+      target: { value: "localhost:3000" },
+    });
+
+    fireEvent.click(screen.getAllByText("Open in Safari")[0]!);
+
+    await waitFor(() => {
+      expect(openSpy).toHaveBeenCalledWith(
+        "https://localhost:3000",
+        "_blank",
+        "noopener,noreferrer",
+      );
+    });
+
+    openSpy.mockRestore();
+  });
+
+
+  it("does not rewrite numeric non-http(s) schemes like tel:", async () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+
+    render(<App />);
+    const input = screen.getByLabelText("URL or content");
+    fireEvent.change(input, {
+      target: { value: "tel:1234567890" },
+    });
+
+    fireEvent.click(screen.getAllByText("Open in Safari")[0]!);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Unsupported protocol. Use http or https."),
+      ).toBeInTheDocument();
+    });
+    expect(openSpy).not.toHaveBeenCalled();
+
+    openSpy.mockRestore();
   });
 });

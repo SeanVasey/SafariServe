@@ -13,10 +13,22 @@ const DEFAULT_MEDIA: MediaInfo = detectMediaType("");
 
 const SAFE_PROTOCOLS = ["http:", "https:", "shortcuts:"];
 
+const HOST_WITH_PORT_PATTERN =
+  /^(localhost|(?:\d{1,3}\.){3}\d{1,3}|\[[0-9a-fA-F:]+\]|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+):\d+(?:[/?#]|$)/;
+
 function normalizeUrl(raw: string): string {
   const trimmed = raw.trim();
   if (!trimmed) return trimmed;
-  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(trimmed)) return trimmed;
+
+  // Keep host:port inputs (e.g., localhost:3000, example.com:443) on the https normalization path.
+  if (HOST_WITH_PORT_PATTERN.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
+    return trimmed;
+  }
+
   return `https://${trimmed}`;
 }
 

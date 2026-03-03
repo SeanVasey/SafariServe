@@ -1,5 +1,25 @@
 # Task Plan
 
+## Current Session: Follow-up Fix for URI Normalization Edge Case
+
+- [x] Re-review previous URI normalization patch for edge cases
+- [x] Fix host:port heuristic so numeric custom-scheme payloads are not rewritten
+- [x] Add regression test for `tel:` numeric payload behavior
+- [x] Update CHANGELOG unreleased notes
+- [x] Run verification suite (lint, typecheck, test, build)
+- [ ] Configure git remote and push branch
+- [ ] Commit follow-up patch and create/update PR
+
+## Current Session: Fix URI Scheme Normalization Regression
+
+- [x] Review existing URL normalization and Safari-open validation flow
+- [x] Fix normalization to detect scheme forms without requiring `//`
+- [x] Preserve host:port behavior (`localhost:3000` should still normalize to `https://`)
+- [x] Add regression tests for unsupported non-HTTP(S) schemes and localhost behavior
+- [x] Update CHANGELOG with regression fix details
+- [x] Run full verification suite (lint, typecheck, test, build)
+- [x] Commit changes and create PR
+
 ## Current Session: v1.2.0 — Deployment Fix, Version Sync & README Overhaul
 
 - [x] Full codebase audit — lint, typecheck, tests, build all pass; 0 vulnerabilities
