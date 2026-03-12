@@ -8,10 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Replace favicon, main page icon, and PWA touch icon with new topo-compass SVG design
-- Apple touch icon uses transparent background for iOS light/dark mode home screen backing
-- Add 192x192 and 512x512 PNG icon variants for PWA manifest
-- Update PWA manifest with full icon size coverage
+- Replace blurry `<img>`-based icon with inline `<svg>` loaded from file via Vite `?raw` import for crisp rendering at any size
+- Replace old compass favicon with uploaded SafariServe Icon SVG
+- Update PWA manifest to use transparent background so the icon reflects light/dark mode on iOS Home Screen
+- Simplify PWA manifest to SVG-only icon (remove stale PNG variants that showed old design)
+- Point apple-touch-icon to SVG favicon instead of deleted PNG
 
 ## [2.0.0] - 2026-03-12
 
