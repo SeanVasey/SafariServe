@@ -311,6 +311,8 @@ export default function App() {
       color: "#E2E8F0",
       position: "relative",
       overflow: "hidden",
+      paddingTop: "env(safe-area-inset-top)",
+      paddingBottom: "env(safe-area-inset-bottom)",
     }}>
       {/* Google Fonts */}
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Reddit+Sans:wght@300;400;500;600;700&display=swap'); *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; } input:focus { outline: none; } button { cursor: pointer; border: none; background: none; font-family: inherit; } @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } } @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } } @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } } @keyframes breathe { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } } .fade-up { animation: fadeUp 0.4s ease-out both; } .fade-up-1 { animation-delay: 0.05s; } .fade-up-2 { animation-delay: 0.1s; } .fade-up-3 { animation-delay: 0.15s; } .fade-up-4 { animation-delay: 0.2s; }`}</style>
@@ -337,7 +339,7 @@ export default function App() {
       }} />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, maxWidth: 440, margin: "0 auto", padding: "56px 20px 100px" }}>
+      <div style={{ position: "relative", zIndex: 10, maxWidth: 440, margin: "0 auto", padding: "56px max(20px, env(safe-area-inset-right)) 100px max(20px, env(safe-area-inset-left))" }}>
 
         {/* ── HERO ──────────────────────────────────────────────── */}
         <div className="fade-up" style={{ textAlign: "center", marginBottom: 36 }}>
