@@ -4,6 +4,13 @@ Accumulated patterns from corrections and mistakes. Reviewed at the start of eac
 
 ---
 
+## 2026-03-12 — Fix Blurry Icon: Inline SVG + PWA Transparency
+
+- **`<img src="file.svg">` rasterizes**: Rendering an SVG via `<img>` causes the browser to rasterize it at the element's pixel dimensions, losing crispness at small sizes. For sharp vector rendering, inline the SVG as a DOM element using Vite's `?raw` import with `dangerouslySetInnerHTML`.
+- **Strip XML prologue for inline SVG**: SVG files exported from design tools include `<?xml ...?>`, `<!DOCTYPE ...>`, and comment blocks. Strip these before injecting inline, and remove fixed `width`/`height` attributes so the SVG scales to its container via `viewBox`.
+- **PWA transparent background for iOS**: Set `"background_color": "transparent"` in `manifest.json` so the icon inherits light/dark mode on the iOS Home Screen. Use `"purpose": "any"` for the SVG icon entry.
+- **Don't ship stale PNG assets**: When replacing an icon design, remove old PNG variants that show the previous design. Leaving them creates visual inconsistency if any code path falls back to them.
+
 ## 2026-03-12 — v2.0.0 Complete Code Replacement
 
 - **Major version migration**: When replacing an entire codebase, work through layers systematically: dependencies first, then delete old files, then write new files, then update configs, then tests, then docs. This prevents intermediate broken states.

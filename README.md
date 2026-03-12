@@ -101,12 +101,13 @@ SafariServe/
 │   └── banner.svg              # README header banner
 ├── public/
 │   ├── .nojekyll               # Disables Jekyll processing on GitHub Pages
-│   ├── apple-touch-icon.png    # iOS home screen icon (180x180)
-│   ├── favicon.svg             # App icon (compass rose motif)
+│   ├── favicon.svg             # App icon (SafariServe Icon SVG)
 │   └── manifest.json           # PWA manifest
 ├── src/
 │   ├── __tests__/
 │   │   └── App.test.jsx        # 18 component and interaction tests
+│   ├── assets/
+│   │   └── safariserve-icon.svg # App icon imported inline via ?raw
 │   ├── test/
 │   │   └── setup.js            # Test setup (jest-dom, canvas mock)
 │   ├── App.jsx                 # Single-file application component

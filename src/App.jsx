@@ -1,8 +1,17 @@
 import { useState, useEffect, useRef } from "react";
+import iconSvgRaw from "./assets/safariserve-icon.svg?raw";
+
+// Strip XML prologue and fixed dimensions so the SVG scales to its container
+const iconSvg = iconSvgRaw
+  .replace(/<\?xml[^?]*\?>\s*/g, "")
+  .replace(/<!DOCTYPE[^>]*>\s*/g, "")
+  .replace(/<!--[^]*?-->\s*/g, "")
+  .replace(/\s*width="[^"]*"/, "")
+  .replace(/\s*height="[^"]*"/, "");
 
 // ━━━ ICON COMPONENTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const CompassIcon = ({ size = 24, className = "" }) => (
-<img src="/favicon.svg" width={size} height={size} alt="SafariServe" className={className} style={{ display: "block", borderRadius: "50%" }} />
+<span className={className} role="img" aria-label="SafariServe" style={{ display: "inline-block", width: size, height: size, lineHeight: 0 }} dangerouslySetInnerHTML={{ __html: iconSvg }} />
 );
 const LinkIcon = ({ size = 24, className = "" }) => (
 <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
