@@ -1,9 +1,114 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <g transform="matrix(0.8, 0, 0, 0.8, 6.4, 6.4)">
-    <circle cx="32" cy="32" r="30" stroke="#00D2FF" stroke-width="2.5" fill="#0A0E14"/>
-    <path d="M32 8 L36 28 L32 32 L28 28 Z" fill="#00D2FF" opacity="0.9"/>
-    <path d="M32 56 L28 36 L32 32 L36 36 Z" fill="#FF7B54" opacity="0.9"/>
-    <path d="M8 32 L28 28 L32 32 L28 36 Z" fill="#00B4D8" opacity="0.7"/>
-    <path d="M56 32 L36 36 L32 32 L36 28 Z" fill="#FFB26B" opacity="0.7"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Base dark navy -->
+    <radialGradient id="bgBase" cx="22%" cy="18%" r="95%">
+      <stop offset="0%" stop-color="#040e1a"/>
+      <stop offset="40%" stop-color="#062030"/>
+      <stop offset="70%" stop-color="#083845"/>
+      <stop offset="100%" stop-color="#0c5058"/>
+    </radialGradient>
+
+    <!-- Teal gradient overlay: bright lower-right -->
+    <radialGradient id="bgGrad" cx="76%" cy="80%" r="65%" fx="80%" fy="83%">
+      <stop offset="0%" stop-color="#00e0d0" stop-opacity="0.75"/>
+      <stop offset="18%" stop-color="#00a8a0" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#0a6565" stop-opacity="0.4"/>
+      <stop offset="65%" stop-color="#0a3545" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#061628" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Subtle bright glow hotspot -->
+    <radialGradient id="glowSpot" cx="72%" cy="76%" r="16%">
+      <stop offset="0%" stop-color="#50ffee" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#00ddd0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00c8c8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Clip -->
+    <clipPath id="circleClip">
+      <circle cx="256" cy="256" r="248"/>
+    </clipPath>
+
+    <!-- Compass glow -->
+    <filter id="compassGlow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background layers -->
+  <circle cx="256" cy="256" r="248" fill="url(#bgBase)"/>
+  <circle cx="256" cy="256" r="248" fill="url(#bgGrad)"/>
+
+  <!-- ============ TOPOGRAPHIC CONTOUR LINES ============ -->
+  <g clip-path="url(#circleClip)">
+    <!-- Far left deep dark band -->
+    <path d="M8,8 Q30,70 22,140 Q14,210 35,280 Q55,350 28,420 Q15,470 25,512 L8,512 Z" fill="#030c18" opacity="0.7"/>
+
+    <!-- Second dark band -->
+    <path d="M25,8 Q55,60 48,130 Q40,200 65,270 Q88,340 58,405 Q38,460 55,512 L25,512 Q15,470 35,410 Q60,350 35,280 Q12,210 25,140 Q35,70 25,20 Z" fill="#061828" opacity="0.6"/>
+
+    <!-- Third band -->
+    <path d="M55,8 Q88,55 82,130 Q75,205 105,275 Q132,340 100,410 Q80,470 100,512 L55,512 Q55,460 40,405 Q25,345 58,280 Q88,215 55,150 Q30,90 60,30 Z" fill="#0a2234" opacity="0.5"/>
+
+    <!-- Mid-left -->
+    <path d="M100,8 Q130,65 125,150 Q118,235 150,300 Q180,365 145,430 Q125,485 150,512 L100,512 Q80,475 70,415 Q60,355 95,290 Q128,225 95,160 Q70,100 105,40 Z" fill="#0d2c3c" opacity="0.45"/>
+
+    <!-- Center-left -->
+    <path d="M150,8 Q180,75 175,170 Q168,265 205,335 Q238,395 200,460 Q180,500 210,512 L150,512 Q130,485 120,430 Q110,370 148,310 Q182,250 150,185 Q125,120 155,55 Z" fill="#0f3848" opacity="0.4"/>
+
+    <!-- Center -->
+    <path d="M210,15 Q240,95 235,200 Q228,305 270,375 Q305,435 270,495 L260,512 L210,512 Q195,490 180,435 Q165,375 205,315 Q240,255 210,195 Q185,135 215,65 Z" fill="#124a52" opacity="0.38"/>
+
+    <!-- Center-right -->
+    <path d="M260,30 Q290,115 285,225 Q278,335 325,400 Q358,455 330,512 L260,512 Q265,495 245,440 Q228,385 265,325 Q300,265 268,205 Q242,145 270,75 Z" fill="#165e5a" opacity="0.35"/>
+
+    <!-- Right -->
+    <path d="M330,55 Q358,140 352,250 Q345,360 390,430 Q418,480 400,512 L330,512 Q335,490 310,440 Q290,385 330,325 Q365,265 335,205 Q310,145 340,85 Z" fill="#1a7268" opacity="0.33"/>
+
+    <!-- Far right -->
+    <path d="M400,90 Q425,175 418,285 Q412,395 450,455 Q470,500 458,512 L400,512 Q400,485 380,435 Q365,380 400,320 Q430,260 400,200 Q380,145 408,110 Z" fill="#1e8878" opacity="0.3"/>
+
+    <!-- Rightmost accent band -->
+    <path d="M458,150 Q478,235 472,340 Q468,430 498,485 Q512,510 510,512 L458,512 Q458,500 440,450 Q425,400 455,340 Q478,280 455,220 Q440,170 462,160 Z" fill="#24a090" opacity="0.28"/>
+
+    <!-- Subtle upper horizontal dark wash -->
+    <path d="M8,8 L512,8 L512,50 Q440,62 370,45 Q300,28 230,52 Q160,75 90,48 Q40,28 8,40 Z" fill="#030c16" opacity="0.45"/>
+
+    <path d="M8,40 Q50,58 110,42 Q170,26 240,55 Q310,82 380,52 Q440,25 512,50 L512,100 Q435,85 365,105 Q295,122 225,95 Q155,68 85,98 Q30,122 8,95 Z" fill="#061420" opacity="0.35"/>
+
+    <!-- Lower teal accent lines -->
+    <path d="M220,455 Q280,440 340,460 Q400,478 460,455 Q490,442 512,460 L512,500 Q475,488 430,502 Q370,515 310,495 Q250,475 200,498 Q170,510 160,500 Z" fill="#1c9585" opacity="0.3"/>
+
+    <path d="M320,490 Q380,478 440,495 Q480,508 512,498 L512,512 L300,512 Q305,505 325,498 Z" fill="#22a898" opacity="0.25"/>
+  </g>
+
+  <!-- Glow hotspot -->
+  <circle cx="256" cy="256" r="248" fill="url(#glowSpot)"/>
+
+  <!-- ============ COMPASS ============ -->
+  <g filter="url(#compassGlow)">
+    <!-- Outer ring -->
+    <circle cx="256" cy="256" r="132" fill="none" stroke="white" stroke-width="7.5" opacity="0.95"/>
+
+    <!-- Inner ring -->
+    <circle cx="256" cy="256" r="106" fill="none" stroke="white" stroke-width="7.5" opacity="0.95"/>
+
+    <!-- Cardinal ticks (N, S, E, W) bridging the rings -->
+    <line x1="256" y1="124" x2="256" y2="150" stroke="white" stroke-width="7" opacity="0.95"/>
+    <line x1="256" y1="362" x2="256" y2="388" stroke="white" stroke-width="7" opacity="0.95"/>
+    <line x1="362" y1="256" x2="388" y2="256" stroke="white" stroke-width="7" opacity="0.95"/>
+    <line x1="124" y1="256" x2="150" y2="256" stroke="white" stroke-width="7" opacity="0.95"/>
+
+    <!-- Compass needle pointing NE (rotated -45deg) -->
+    <g transform="translate(256,256) rotate(-45)">
+      <!-- Filled north half -->
+      <polygon points="0,-92 17,0 -17,0" fill="white" opacity="0.95"/>
+      <!-- Outlined south half -->
+      <polygon points="0,92 17,0 -17,0" fill="none" stroke="white" stroke-width="4" stroke-linejoin="miter" opacity="0.95"/>
+    </g>
   </g>
 </svg>

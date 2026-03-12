@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 // ━━━ ICON COMPONENTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const CompassIcon = ({ size = 24, className = "" }) => (
-<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-</svg>
+<img src="/favicon.svg" width={size} height={size} alt="SafariServe" className={className} style={{ display: "block", borderRadius: "50%" }} />
 );
 const LinkIcon = ({ size = 24, className = "" }) => (
 <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -360,12 +358,10 @@ export default function App() {
               filter: "blur(16px)", pointerEvents: "none",
             }} />
             <div style={{
-              background: "rgba(0, 229, 255, 0.08)", border: "1px solid rgba(0, 229, 255, 0.25)",
-              padding: 10, borderRadius: 14, position: "relative",
-              backdropFilter: "blur(16px)",
-              boxShadow: "0 0 24px rgba(0, 229, 255, 0.12), inset 0 1px 0 rgba(255,255,255,0.05)",
+              padding: 0, borderRadius: "50%", position: "relative",
+              boxShadow: "0 0 24px rgba(0, 229, 255, 0.18), 0 0 48px rgba(0, 229, 255, 0.08)",
             }}>
-              <CompassIcon size={30} />
+              <CompassIcon size={40} />
             </div>
             <h1 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "2.4rem", letterSpacing: "-0.02em", lineHeight: 1, color: "#F1F5F9" }}>
               SafariServe
