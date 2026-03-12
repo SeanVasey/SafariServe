@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Replace favicon, main page icon, and PWA touch icon with new topo-compass SVG design
+- Apple touch icon uses transparent background for iOS light/dark mode home screen backing
+- Add 192x192 and 512x512 PNG icon variants for PWA manifest
+- Update PWA manifest with full icon size coverage
+
 ## [2.0.0] - 2026-03-12
 
 ### Changed
