@@ -1,46 +1,47 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="SafariServe — Your gateway to Safari, from anywhere" width="100%" />
+  <img src="docs/banner.svg" alt="SafariServe — The intelligent jumping-off point for your media" width="100%" />
 </p>
 
 <p align="center">
   <a href="https://github.com/SeanVasey/SafariServe/actions/workflows/ci.yml"><img src="https://github.com/SeanVasey/SafariServe/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="https://github.com/SeanVasey/SafariServe/actions/workflows/deploy-pages.yml"><img src="https://github.com/SeanVasey/SafariServe/actions/workflows/deploy-pages.yml/badge.svg" alt="Deploy"></a>
-  <img src="https://img.shields.io/badge/version-1.2.0-00D2FF?style=flat&labelColor=0A0E14" alt="Version 1.2.0">
+  <img src="https://img.shields.io/badge/version-2.0.0-00D2FF?style=flat&labelColor=0A0E14" alt="Version 2.0.0">
   <a href="https://seanvasey.github.io/SafariServe/"><img src="https://img.shields.io/badge/demo-live-00B4D8?style=flat&labelColor=0A0E14" alt="Live Demo"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-FFB26B?style=flat&labelColor=0A0E14" alt="License"></a>
 </p>
 
 <p align="center">
-  <strong>VASEY/AI Presents</strong> — A single-purpose content clearinghouse that bridges non-Safari browsers to Safari's exclusive iOS integration points.
+  <strong>VASEY/AI Presents</strong> — The intelligent jumping-off point for your media.
 </p>
 
 ---
 
 ## What is SafariServe?
 
-SafariServe accepts content from **any source** — Brave, Chrome, Firefox, Share Sheet, automation workflows — and relays it to Safari. It also generates **media-type-aware Apple Shortcuts** for persistent Home Screen access, turning any URL into a one-tap Safari experience.
+SafariServe accepts content from **any source** — Brave, Chrome, Firefox, Share Sheet, automation workflows — and relays it to Safari via Apple Shortcuts. It serves as a single-purpose content clearinghouse with media-type detection, shortcut construction guides, and IFTTT automation integration.
 
 ## Features
 
-- **URL Relay** — Instantly open any URL in Safari from any browser
-- **Media Type Detection** — Auto-classifies URLs as Webpage, Video, Audio, Image, Document, or App/Deep-Link
-- **Shortcut Generator** — Create Apple Shortcuts with custom names and icons for Home Screen access
-- **History** — Track recently submitted URLs with timestamps and media type badges
-- **Automation Templates** — Pre-built shortcut templates for each media type
+- **Push to Safari** — Route any URL to Safari via the ForceSafari Apple Shortcut
+- **Media Type Detection** — Auto-classifies URLs as Video, Audio, Image, Document, or Article
+- **Shortcut Construction** — Step-by-step guides for building Send to Serve, ForceSafari, and Save to Home Screen shortcuts
+- **IFTTT Webhook Integration** — Trigger automation workflows via IFTTT Maker webhooks
+- **Animated Mesh Background** — Canvas-based electric cyan particle system with flowing ribbons
 - **PWA** — Installable as a Progressive Web App on the Home Screen
-- **URL Param Intake** — Auto-populates from `?url=` query parameters for Share Sheet integration
+- **Pipeline Flow** — Visual diagram: Brave → Send to Serve → SafariServe → ForceSafari → Safari
 
 ## Tech Stack
 
 | Layer      | Technology                           |
 |------------|--------------------------------------|
-| Language   | TypeScript                           |
+| Language   | JavaScript (JSX)                     |
 | UI         | React 19                             |
-| Styling    | Tailwind CSS 4                       |
-| Icons      | Lucide React                         |
+| Styling    | Inline styles                        |
+| Icons      | Inline SVG components                |
+| Fonts      | Google Fonts (Outfit, Reddit Sans)   |
 | Build      | Vite 6                               |
 | Testing    | Vitest + React Testing Library       |
-| Linting    | ESLint 9 + TypeScript ESLint         |
+| Linting    | ESLint 9                             |
 | CI/CD      | GitHub Actions                       |
 | Hosting    | GitHub Pages / Vercel                |
 
@@ -83,11 +84,10 @@ BASE_PATH=/SafariServe/ npm run build
 npm run test
 ```
 
-### Lint & Typecheck
+### Lint
 
 ```bash
 npm run lint
-npm run typecheck
 ```
 
 ## Project Structure
@@ -95,8 +95,8 @@ npm run typecheck
 ```
 SafariServe/
 ├── .github/workflows/
-│   ├── ci.yml                  # CI pipeline (lint, typecheck, test, build)
-│   └── deploy-pages.yml        # GitHub Pages build + deployment workflow
+│   ├── ci.yml                  # CI pipeline (lint, test, build)
+│   └── deploy-pages.yml        # GitHub Pages deployment workflow
 ├── docs/
 │   └── banner.svg              # README header banner
 ├── public/
@@ -105,26 +105,18 @@ SafariServe/
 │   ├── favicon.svg             # App icon (compass rose motif)
 │   └── manifest.json           # PWA manifest
 ├── src/
-│   ├── __tests__/              # Test suites (App, detectMediaType, storage)
-│   ├── components/
-│   │   ├── Header.tsx          # VASEY/AI branding header
-│   │   ├── UrlSubmissionPanel.tsx
-│   │   ├── ShortcutGeneratorPanel.tsx
-│   │   ├── QuickActionsBar.tsx
-│   │   ├── HistoryPanel.tsx
-│   │   └── TemplatesPanel.tsx
-│   ├── utils/
-│   │   ├── detectMediaType.ts  # URL → media type classification
-│   │   └── storage.ts          # localStorage persistence layer
-│   ├── types.ts                # Shared TypeScript types
-│   ├── App.tsx                 # Root application component
-│   ├── main.tsx                # Entry point
-│   └── index.css               # Tailwind imports + design tokens
+│   ├── __tests__/
+│   │   └── App.test.jsx        # 18 component and interaction tests
+│   ├── test/
+│   │   └── setup.js            # Test setup (jest-dom, canvas mock)
+│   ├── App.jsx                 # Single-file application component
+│   └── main.jsx                # React entry point
 ├── tasks/
 │   ├── lessons.md              # Accumulated development lessons
 │   └── todo.md                 # Active task tracking
 ├── .editorconfig               # Editor formatting rules
 ├── .gitignore                  # Git ignore rules
+├── AGENTS.md                   # Agent instructions
 ├── CHANGELOG.md                # Project changelog
 ├── CLAUDE.md                   # Engineering standards
 ├── CODE_OF_CONDUCT.md          # Contributor Covenant
@@ -134,30 +126,28 @@ SafariServe/
 ├── eslint.config.js            # ESLint 9 flat config
 ├── index.html                  # HTML entry point
 ├── package.json                # Dependencies and scripts
-├── tsconfig.json               # TypeScript project references
-├── tsconfig.app.json           # TypeScript config for src/
-├── tsconfig.node.json          # TypeScript config for build tooling
-├── vite.config.ts              # Vite build configuration
-└── vitest.config.ts            # Vitest test configuration
+├── vite.config.js              # Vite build configuration
+└── vitest.config.js            # Vitest test configuration
 ```
 
 ## Design System
 
 The UI follows the VASEY/AI dark-canvas glassmorphism aesthetic:
 
-- **Background**: Near-black (`#0A0E14`) with cyan/blue ambient glow
-- **Surfaces**: Frosted glass panels with `backdrop-filter: blur()`
-- **Accent**: Cyan (`#00D2FF`) → Teal (`#00B4D8`) → Blue (`#0077B6`)
-- **Typography**: System fonts, high contrast on dark backgrounds
-- **Interactions**: Soft glow indicators, active:scale-95 press feedback
+- **Background**: Near-black gradient with canvas-animated electric cyan mesh
+- **Surfaces**: Liquid glass panels with `backdrop-filter: blur(48px) saturate(1.8)`
+- **Accent**: Electric cyan (`#00E5FF`) with supporting coral, orange, and purple
+- **Typography**: Outfit (headings) + Reddit Sans (body) from Google Fonts
+- **Particles**: 80 pulsing, connected particles with radial glow effects
+- **Animations**: Fade-up entrances, breathing ambient glows, flowing ribbons
 
 ## iOS Integration
 
-SafariServe integrates with Apple Shortcuts via:
+SafariServe integrates with Apple Shortcuts via three shortcut templates:
 
-1. **Share Sheet Shortcut** — Accept URLs from any app, relay to SafariServe
-2. **Direct Safari Relay** — Zero-UI instant open in Safari
-3. **Home Screen Generator** — Create named, iconified shortcuts for the Home Screen
+1. **Send to Serve** (Share Sheet) — Accept URLs from any app, encode and relay to SafariServe
+2. **ForceSafari** (Core Engine) — Receive text input and open it natively in Safari
+3. **Save to Home Screen** — Use Safari's native Add to Home Screen from the share menu
 
 URLs can be passed via the `?url=` query parameter for automated workflows.
 

@@ -4,6 +4,13 @@ Accumulated patterns from corrections and mistakes. Reviewed at the start of eac
 
 ---
 
+## 2026-03-12 — v2.0.0 Complete Code Replacement
+
+- **Major version migration**: When replacing an entire codebase, work through layers systematically: dependencies first, then delete old files, then write new files, then update configs, then tests, then docs. This prevents intermediate broken states.
+- **TypeScript to JavaScript migration**: When dropping TypeScript, remember to update all touchpoints: `tsconfig*.json` deletion, `package.json` scripts (remove `tsc -b`), CI workflow (remove typecheck step), ESLint config (remove `typescript-eslint`), Vite/Vitest config renames (`.ts` → `.js`), and `index.html` script src extension.
+- **Canvas testing in jsdom**: `jsdom` does not implement `<canvas>`. Mock `HTMLCanvasElement.prototype.getContext` in test setup to return a stub object with all used 2D context methods (clearRect, beginPath, fill, stroke, arc, createLinearGradient, createRadialGradient, etc.).
+- **Duplicate text in component tests**: When the same text appears in multiple places (e.g., flow diagram labels and card titles), use `getAllByText` instead of `getByText` and assert on array length. Add explicit `afterEach(cleanup)` to prevent DOM accumulation between tests.
+
 ## 2026-03-03 — v1.2.0 Deployment Fix, Version Sync & README Overhaul
 
 - **Always add `.nojekyll` to GitHub Pages sites**: GitHub Pages runs Jekyll by default, which can silently interfere with static file serving. Every non-Jekyll GitHub Pages site must include a `.nojekyll` file in the deploy root. Add it to `public/` so Vite copies it to `dist/`.

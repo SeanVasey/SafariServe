@@ -6,9 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Fixed
+## [2.0.0] - 2026-03-12
 
-- Tighten URL normalization host:port detection so numeric custom-scheme payloads (for example `tel:123...`) are no longer misclassified and rewritten as `https://...`
+### Changed
+
+- Complete application rewrite as single-file React component
+- Switch from TypeScript to plain JavaScript (JSX)
+- Replace Tailwind CSS with inline styles
+- Replace Lucide React icons with inline SVG components
+- New canvas-based animated electric cyan mesh background
+- New tab system: Route / Shortcuts / Automate
+- New "Push to Safari" action via `shortcuts://` deep link to ForceSafari shortcut
+- New IFTTT webhook integration (Automate tab)
+- New expandable shortcut construction templates with step-by-step guides
+- New flow diagram showing Brave → Send to Serve → SafariServe → ForceSafari → Safari pipeline
+- Google Fonts (Outfit + Reddit Sans) loaded via inline style tag
+- Liquid glass card UI with glassmorphism backdrop-filter effects
+
+### Removed
+
+- TypeScript compilation and type checking
+- Tailwind CSS dependency and design token system
+- Lucide React icon library dependency
+- Multi-file component architecture (Header, UrlSubmissionPanel, ShortcutGeneratorPanel, QuickActionsBar, HistoryPanel, TemplatesPanel, CategoryIcons)
+- Utility modules (detectMediaType, storage, iconRegistry)
+- localStorage-backed history panel
+- Vercel Speed Insights integration
+- Previous test suite (replaced with new 18-test suite)
 
 ## [1.2.1] - 2026-03-03
 
