@@ -393,7 +393,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .footer-logo:hover { opacity: 0.75; }
 
 .footer-logo-vm { width: 36px; height: 31px; }
-.footer-logo-vai { width: 34px; height: 34px; }
+.footer-logo-vai { width: 48px; height: 48px; }
 .footer-logo-sep { width: 1px; height: 24px; background: var(--border-glow); }
 
 .footer-suite-tag {
