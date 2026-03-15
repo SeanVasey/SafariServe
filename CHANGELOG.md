@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Update PWA manifest to use transparent background so the icon reflects light/dark mode on iOS Home Screen
 - Simplify PWA manifest to SVG-only icon (remove stale PNG variants that showed old design)
 - Point apple-touch-icon to SVG favicon instead of deleted PNG
+- Update all app icons to SafariServe Icon Remix design (inline SVG, favicon, apple-touch-icon, PWA manifest PNGs)
+- Regenerate PNG icon variants (180×180, 192×192, 512×512) from new Remix SVG with RGBA transparency for iOS light/dark mode
+- Remove unused `safari-logo.png` asset
 
 ## [2.0.0] - 2026-03-12
 
