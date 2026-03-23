@@ -16,6 +16,8 @@
 
 ---
 
+<!-- TODO: Add a hero screenshot or screen capture of the app in use -->
+
 ## What is SafariServe?
 
 SafariServe accepts content from **any source** — Brave, Chrome, Firefox, Share Sheet, automation workflows — and relays it to Safari via Apple Shortcuts. It serves as a single-purpose content clearinghouse with media-type detection, shortcut construction guides, and IFTTT automation integration.
@@ -101,7 +103,10 @@ SafariServe/
 │   └── banner.svg              # README header banner
 ├── public/
 │   ├── .nojekyll               # Disables Jekyll processing on GitHub Pages
+│   ├── apple-touch-icon.png    # iOS home screen icon
 │   ├── favicon.svg             # App icon (SafariServe Icon SVG)
+│   ├── icon-192x192.png        # PWA manifest icon (192px)
+│   ├── icon-512x512.png        # PWA manifest icon (512px)
 │   └── manifest.json           # PWA manifest
 ├── src/
 │   ├── __tests__/
