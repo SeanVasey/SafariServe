@@ -1,13 +1,12 @@
 # Task Plan
 
-## Current Session: Fix Blurry Icon — Inline SVG + PWA Transparent Background
+## Current Session: Update CLAUDE.md Standards & Repo Housekeeping
 
-- [x] Explore codebase and understand current icon rendering (img tag → favicon.svg)
-- [x] Copy uploaded SafariServe Icon.svg to src/assets/ and public/favicon.svg
-- [x] Replace CompassIcon `<img>` with inline `<svg>` via Vite `?raw` import
-- [x] Update PWA manifest: transparent background, SVG-only icon, purpose: any
-- [x] Remove stale PNG icons (apple-touch-icon.png, icon-192.png, icon-512.png)
-- [x] Update index.html apple-touch-icon to reference SVG
-- [x] Update CHANGELOG, README project structure, tasks
+- [x] Explore repo structure and current state
+- [x] Replace CLAUDE.md with updated engineering standards
+- [x] Fix docs/banner.svg: version (v1.2.0 → v2.0.0), tech badges (TypeScript → JavaScript, Tailwind CSS 4 → Inline Styles), tagline alignment
+- [x] Update README.md: add hero screenshot placeholder, complete public/ manifest in project structure
+- [x] Verify all required repo files present
+- [x] Update CHANGELOG.md with session changes
 - [x] Verify: lint, test, build
-- [x] Commit and push to feature branch
+- [x] Commit and push

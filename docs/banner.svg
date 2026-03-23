@@ -94,11 +94,11 @@
   <!-- Version badge -->
   <g transform="translate(745, 185)">
     <rect width="52" height="22" rx="11" fill="#00D2FF" fill-opacity="0.1" stroke="#00D2FF" stroke-opacity="0.2" stroke-width="1"/>
-    <text x="26" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#00D2FF" letter-spacing="0.5">v1.2.0</text>
+    <text x="26" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#00D2FF" letter-spacing="0.5">v2.0.0</text>
   </g>
 
   <!-- Tagline -->
-  <text x="600" y="252" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" fill="#E8EDF2" fill-opacity="0.5" letter-spacing="0.5">Your gateway to Safari, from anywhere.</text>
+  <text x="600" y="252" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500" fill="#E8EDF2" fill-opacity="0.5" letter-spacing="0.5">The intelligent jumping-off point for your media.</text>
 
   <!-- Bottom accent line -->
   <rect x="460" y="290" width="280" height="1" rx="0.5" fill="url(#cyan-grad)" opacity="0.2"/>
@@ -110,12 +110,12 @@
       <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">React 19</text>
     </g>
     <g transform="translate(-60, 0)">
-      <rect x="-45" y="-10" width="90" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
-      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">TypeScript</text>
+      <rect x="-42" y="-10" width="84" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
+      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">JavaScript</text>
     </g>
     <g transform="translate(60, 0)">
-      <rect x="-48" y="-10" width="96" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
-      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">Tailwind CSS 4</text>
+      <rect x="-44" y="-10" width="88" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>
+      <text y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#00D2FF" fill-opacity="0.7">Inline Styles</text>
     </g>
     <g transform="translate(168, 0)">
       <rect x="-30" y="-10" width="60" height="20" rx="10" fill="#111820" stroke="#00D2FF" stroke-opacity="0.15" stroke-width="1"/>

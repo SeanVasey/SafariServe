@@ -17,6 +17,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Regenerate PNG icon variants (180×180, 192×192, 512×512) from new Remix SVG with RGBA transparency for iOS light/dark mode
 - Remove unused `safari-logo.png` asset
 
+### Docs
+
+- Rewrite CLAUDE.md with expanded security standards (auth, input validation, API access control, supply chain, production hardening), CI/CD deployment specs (Vercel + GitHub Pages), and updated project structure template
+- Fix docs/banner.svg: correct version badge (v1.2.0 → v2.0.0), tech badges (TypeScript → JavaScript, Tailwind CSS 4 → Inline Styles), align tagline with product description
+- Update README.md project structure to include PWA icon assets in public/
+
 ## [2.0.0] - 2026-03-12
 
 ### Changed
