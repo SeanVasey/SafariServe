@@ -831,7 +831,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                     <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: 700, color: "#00E5FF", letterSpacing: "0.08em" }}>WEBHOOK CONFIG</span>
                   </div>
                   <p style={{ fontSize: 12, color: "#3D5068", lineHeight: 1.6 }}>
-                    Set your IFTTT Maker webhook key in the SafariServe config to enable direct payload dispatch. The webhook URL follows the pattern: <span style={{ fontFamily: "monospace", color: "#4A6178" }}>https://maker.ifttt.com/trigger/&#123;event&#125;/with/key/&#123;your_key&#125;</span>
+                    Set your IFTTT Maker webhook key in the SafariServe config to enable direct payload dispatch. The webhook URL follows the pattern: <span style={{ fontFamily: "monospace", color: "#4A6178", wordBreak: "break-all" }}>https://maker.ifttt.com/trigger/&#123;event&#125;/with/key/&#123;your_key&#125;</span>
                   </p>
                 </div>
               </div>
