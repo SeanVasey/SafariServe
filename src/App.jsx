@@ -467,21 +467,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
             VASEY/AI PRESENTS
           </p>
 
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 10, position: "relative" }}>
-            {/* Glow behind icon */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 10 }}>
             <div style={{
-              position: "absolute", left: "50%", top: "50%", transform: "translate(-65%, -50%)",
-              width: 80, height: 80, borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 200, 240, 0.12) 50%, transparent 75%)",
-              filter: "blur(14px)", pointerEvents: "none",
-            }} />
-            <div style={{
-              padding: 0, borderRadius: "50%", position: "relative",
+              position: "relative", padding: 0, borderRadius: "50%", flexShrink: 0,
               filter: "drop-shadow(0 0 8px rgba(0, 229, 255, 0.35)) drop-shadow(0 0 20px rgba(0, 229, 255, 0.15))",
             }}>
+              {/* Glow behind icon */}
+              <div style={{
+                position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)",
+                width: 80, height: 80, borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 200, 240, 0.12) 50%, transparent 75%)",
+                filter: "blur(14px)", pointerEvents: "none",
+              }} />
               <CompassIcon size={40} />
             </div>
-            <h1 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "2.4rem", letterSpacing: "-0.02em", lineHeight: 1, color: "#F1F5F9" }}>
+            <h1 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "2.4rem", letterSpacing: "-0.02em", lineHeight: 1, color: "#F1F5F9", margin: 0 }}>
               SafariServe
             </h1>
             <span style={{
