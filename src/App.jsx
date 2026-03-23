@@ -467,21 +467,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
             VASEY/AI PRESENTS
           </p>
 
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 10, position: "relative" }}>
-            {/* Glow behind icon */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 10 }}>
             <div style={{
-              position: "absolute", left: "50%", top: "50%", transform: "translate(-65%, -50%)",
-              width: 80, height: 80, borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 200, 240, 0.12) 50%, transparent 75%)",
-              filter: "blur(14px)", pointerEvents: "none",
-            }} />
-            <div style={{
-              padding: 0, borderRadius: "50%", position: "relative",
+              position: "relative", padding: 0, borderRadius: "50%", flexShrink: 0,
               filter: "drop-shadow(0 0 8px rgba(0, 229, 255, 0.35)) drop-shadow(0 0 20px rgba(0, 229, 255, 0.15))",
             }}>
+              {/* Glow behind icon */}
+              <div style={{
+                position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)",
+                width: 80, height: 80, borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 200, 240, 0.12) 50%, transparent 75%)",
+                filter: "blur(14px)", pointerEvents: "none",
+              }} />
               <CompassIcon size={40} />
             </div>
-            <h1 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "2.4rem", letterSpacing: "-0.02em", lineHeight: 1, color: "#F1F5F9" }}>
+            <h1 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: "2.4rem", letterSpacing: "-0.02em", lineHeight: 1, color: "#F1F5F9", margin: 0 }}>
               SafariServe
             </h1>
             <span style={{
@@ -831,7 +831,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                     <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: 700, color: "#00E5FF", letterSpacing: "0.08em" }}>WEBHOOK CONFIG</span>
                   </div>
                   <p style={{ fontSize: 12, color: "#3D5068", lineHeight: 1.6 }}>
-                    Set your IFTTT Maker webhook key in the SafariServe config to enable direct payload dispatch. The webhook URL follows the pattern: <span style={{ fontFamily: "monospace", color: "#4A6178" }}>https://maker.ifttt.com/trigger/&#123;event&#125;/with/key/&#123;your_key&#125;</span>
+                    Set your IFTTT Maker webhook key in the SafariServe config to enable direct payload dispatch. The webhook URL follows the pattern: <span style={{ fontFamily: "monospace", color: "#4A6178", wordBreak: "break-all" }}>https://maker.ifttt.com/trigger/&#123;event&#125;/with/key/&#123;your_key&#125;</span>
                   </p>
                 </div>
               </div>
