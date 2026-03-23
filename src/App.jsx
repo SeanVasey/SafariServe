@@ -7,7 +7,9 @@ const iconSvg = iconSvgRaw
   .replace(/<!DOCTYPE[^>]*>\s*/g, "")
   .replace(/<!--[^]*?-->\s*/g, "")
   .replace(/\s*width="[^"]*"/, "")
-  .replace(/\s*height="[^"]*"/, "");
+  .replace(/\s*height="[^"]*"/, "")
+  // Remove the outermost dark background circle (#003b51) that causes a black splotch
+  .replace(/fill="#003b51"/, 'fill="#003b51" fill-opacity="0"');
 
 // ━━━ ICON COMPONENTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const CompassIcon = ({ size = 24, className = "" }) => (
@@ -469,13 +471,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
             {/* Glow behind icon */}
             <div style={{
               position: "absolute", left: "50%", top: "50%", transform: "translate(-65%, -50%)",
-              width: 100, height: 100, borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(0, 230, 255, 0.3) 0%, rgba(0, 200, 240, 0.1) 40%, transparent 70%)",
-              filter: "blur(16px)", pointerEvents: "none",
+              width: 80, height: 80, borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 200, 240, 0.12) 50%, transparent 75%)",
+              filter: "blur(14px)", pointerEvents: "none",
             }} />
             <div style={{
               padding: 0, borderRadius: "50%", position: "relative",
-              boxShadow: "0 0 24px rgba(0, 229, 255, 0.18), 0 0 48px rgba(0, 229, 255, 0.08)",
+              filter: "drop-shadow(0 0 8px rgba(0, 229, 255, 0.35)) drop-shadow(0 0 20px rgba(0, 229, 255, 0.15))",
             }}>
               <CompassIcon size={40} />
             </div>
