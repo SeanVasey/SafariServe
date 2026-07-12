@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-07-12
+
+### Fixed
+
+- Repaint the static canvas frame on window resize when `prefers-reduced-motion` is enabled — resizing resets the canvas dimensions (clearing it), and with no animation loop running the background stayed blank (reported in review of #35)
+
 ## [2.1.0] - 2026-07-12
 
 ### Added

@@ -86,12 +86,16 @@ function ElectricMeshBackground() {
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     let animFrame;
     let particles = [];
+    let initialized = false;
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = canvas.offsetWidth * dpr;
       canvas.height = canvas.offsetHeight * dpr;
       // Setting width/height resets the transform, so this doesn't compound
       ctx.scale(dpr, dpr);
+      // Resizing clears the canvas; with no animation loop running under
+      // prefers-reduced-motion, repaint the static frame or it stays blank
+      if (prefersReducedMotion && initialized) draw();
     };
     resize();
     const w = () => canvas.offsetWidth;
@@ -199,6 +203,7 @@ function ElectricMeshBackground() {
       if (!prefersReducedMotion) animFrame = requestAnimationFrame(draw);
     };
     draw();
+    initialized = true;
     window.addEventListener("resize", resize);
     return () => { cancelAnimationFrame(animFrame); window.removeEventListener("resize", resize); };
   }, []);
