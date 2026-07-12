@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/SeanVasey/SafariServe/actions/workflows/ci.yml"><img src="https://github.com/SeanVasey/SafariServe/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="https://github.com/SeanVasey/SafariServe/actions/workflows/deploy-pages.yml"><img src="https://github.com/SeanVasey/SafariServe/actions/workflows/deploy-pages.yml/badge.svg" alt="Deploy"></a>
-  <img src="https://img.shields.io/badge/version-2.1.0-00D2FF?style=flat&labelColor=0A0E14" alt="Version 2.1.0">
+  <img src="https://img.shields.io/badge/version-2.1.1-00D2FF?style=flat&labelColor=0A0E14" alt="Version 2.1.1">
   <a href="https://seanvasey.github.io/SafariServe/"><img src="https://img.shields.io/badge/demo-live-00B4D8?style=flat&labelColor=0A0E14" alt="Live Demo"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-FFB26B?style=flat&labelColor=0A0E14" alt="License"></a>
 </p>

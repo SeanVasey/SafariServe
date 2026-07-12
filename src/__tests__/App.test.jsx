@@ -7,6 +7,7 @@ afterEach(() => {
   window.localStorage.clear();
   window.history.replaceState({}, "", "/");
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe("App", () => {
@@ -251,5 +252,26 @@ describe("Tab accessibility", () => {
   it("labels the copy button for screen readers", () => {
     render(<App />);
     expect(screen.getByRole("button", { name: "Copy URL" })).toBeInTheDocument();
+  });
+});
+
+describe("Reduced-motion canvas", () => {
+  it("repaints the static frame after a window resize", () => {
+    // With prefers-reduced-motion there is no animation loop, so a resize
+    // (which clears the canvas) must trigger an explicit redraw
+    const ctxStub = {
+      clearRect: vi.fn(), save: vi.fn(), restore: vi.fn(), beginPath: vi.fn(),
+      moveTo: vi.fn(), lineTo: vi.fn(), closePath: vi.fn(), fill: vi.fn(),
+      stroke: vi.fn(), arc: vi.fn(), fillRect: vi.fn(), scale: vi.fn(),
+      createLinearGradient: () => ({ addColorStop: () => {} }),
+      createRadialGradient: () => ({ addColorStop: () => {} }),
+    };
+    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(ctxStub);
+    vi.stubGlobal("matchMedia", vi.fn().mockReturnValue({ matches: true }));
+    render(<App />);
+    const framesBefore = ctxStub.clearRect.mock.calls.length;
+    expect(framesBefore).toBeGreaterThan(0);
+    fireEvent(window, new Event("resize"));
+    expect(ctxStub.clearRect.mock.calls.length).toBeGreaterThan(framesBefore);
   });
 });
