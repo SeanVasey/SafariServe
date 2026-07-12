@@ -94,7 +94,7 @@
   <!-- Version badge -->
   <g transform="translate(745, 185)">
     <rect width="52" height="22" rx="11" fill="#00D2FF" fill-opacity="0.1" stroke="#00D2FF" stroke-opacity="0.2" stroke-width="1"/>
-    <text x="26" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#00D2FF" letter-spacing="0.5">v2.0.0</text>
+    <text x="26" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#00D2FF" letter-spacing="0.5">v2.1.0</text>
   </g>
 
   <!-- Tagline -->

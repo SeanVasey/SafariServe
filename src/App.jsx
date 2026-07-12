@@ -83,20 +83,24 @@ function ElectricMeshBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     let animFrame;
     let particles = [];
     const resize = () => {
-      canvas.width = canvas.offsetWidth * 2;
-      canvas.height = canvas.offsetHeight * 2;
-      ctx.scale(2, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      // Setting width/height resets the transform, so this doesn't compound
+      ctx.scale(dpr, dpr);
     };
     resize();
     const w = () => canvas.offsetWidth;
     const h = () => canvas.offsetHeight;
-    // More particles, brighter
+    const spawnW = w() || 500;
+    const spawnH = h() || 1400;
     for (let i = 0; i < 80; i++) {
       particles.push({
-        x: Math.random() * 500, y: Math.random() * 1400,
+        x: Math.random() * spawnW, y: Math.random() * spawnH,
         vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.25,
         r: Math.random() * 2.5 + 0.8, o: Math.random() * 0.8 + 0.3,
         pulse: Math.random() * Math.PI * 2,
@@ -191,24 +195,90 @@ function ElectricMeshBackground() {
           }
         }
       }
-      animFrame = requestAnimationFrame(draw);
+      // Respect prefers-reduced-motion: render a single static frame
+      if (!prefersReducedMotion) animFrame = requestAnimationFrame(draw);
     };
     draw();
     window.addEventListener("resize", resize);
     return () => { cancelAnimationFrame(animFrame); window.removeEventListener("resize", resize); };
   }, []);
-  return <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
+  return <canvas ref={canvasRef} aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
 }
 
-// ━━━ MEDIA TYPE DETECTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━ URL PARSING & MEDIA TYPE DETECTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Parse user input into an http(s) URL. Bare domains ("example.com/page") get
+// an https:// prefix; anything else that fails to parse — or parses to a
+// non-web scheme like javascript: — returns null so it can never be routed.
+function parseWebUrl(raw) {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  let parsed = null;
+  try {
+    parsed = new URL(trimmed);
+  } catch {
+    // Bare host-like input only: at least one dot, no spaces, no scheme
+    if (/^[a-z0-9-]+(\.[a-z0-9-]+)+(:\d+)?([/?#]|$)/i.test(trimmed)) {
+      try { parsed = new URL(`https://${trimmed}`); } catch { return null; }
+    }
+  }
+  if (!parsed || (parsed.protocol !== "http:" && parsed.protocol !== "https:")) return null;
+  return parsed;
+}
+
+const MEDIA_HOSTS = {
+  video: ["youtube.com", "youtu.be", "vimeo.com", "dailymotion.com", "twitch.tv"],
+  image: ["flickr.com", "unsplash.com"],
+  audio: ["soundcloud.com", "spotify.com", "music.apple.com"],
+  document: ["docs.google.com", "notion.so"],
+};
+
+// Exact or subdomain match — substring tricks like evil.com/?ref=youtube.com don't count
+function hostMatches(hostname, hosts) {
+  return hosts.some((h) => hostname === h || hostname.endsWith(`.${h}`));
+}
+
 function detectMediaType(url) {
-  if (!url) return "unknown";
-  const l = url.toLowerCase();
-  if (l.includes("youtube.com") || l.includes("youtu.be") || l.includes("vimeo") || l.includes("dailymotion") || l.includes("twitch.tv")) return "video";
-  if (l.match(/\.(jpeg|jpg|gif|png|webp|svg|heic|avif)(\?|$)/i) || l.includes("instagram.com/p/") || l.includes("flickr.com") || l.includes("unsplash.com")) return "image";
-  if (l.match(/\.(mp3|wav|flac|aac|ogg|m4a)(\?|$)/i) || l.includes("soundcloud.com") || l.includes("spotify.com") || l.includes("music.apple.com")) return "audio";
-  if (l.match(/\.(pdf|doc|docx|xls|xlsx|ppt|pptx)(\?|$)/i) || l.includes("docs.google.com") || l.includes("notion.so")) return "document";
+  const parsed = parseWebUrl(url);
+  if (!parsed) return "unknown";
+  const host = parsed.hostname.toLowerCase();
+  const path = parsed.pathname.toLowerCase();
+  if (hostMatches(host, MEDIA_HOSTS.video)) return "video";
+  if (/\.(jpeg|jpg|gif|png|webp|svg|heic|avif)$/.test(path) || hostMatches(host, MEDIA_HOSTS.image) || (hostMatches(host, ["instagram.com"]) && path.startsWith("/p/"))) return "image";
+  if (/\.(mp3|wav|flac|aac|ogg|m4a)$/.test(path) || hostMatches(host, MEDIA_HOSTS.audio)) return "audio";
+  if (/\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$/.test(path) || hostMatches(host, MEDIA_HOSTS.document)) return "document";
   return "article";
+}
+
+// ━━━ IFTTT WEBHOOK CONFIG (persisted locally, never leaves the device) ━━━━
+const WEBHOOK_STORAGE_KEY = "safariserve.webhook";
+
+function loadWebhookConfig() {
+  try {
+    const raw = window.localStorage.getItem(WEBHOOK_STORAGE_KEY);
+    if (!raw) return { event: "", key: "" };
+    const parsed = JSON.parse(raw);
+    return { event: parsed.event || "", key: parsed.key || "" };
+  } catch {
+    return { event: "", key: "" };
+  }
+}
+
+function saveWebhookConfig(config) {
+  try {
+    window.localStorage.setItem(WEBHOOK_STORAGE_KEY, JSON.stringify(config));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Read the ?url= share parameter (used by the Send to Serve shortcut)
+function getSharedUrl() {
+  try {
+    return new URLSearchParams(window.location.search).get("url")?.trim() || "";
+  } catch {
+    return "";
+  }
 }
 
 const MEDIA_CONFIG = {
@@ -217,7 +287,7 @@ const MEDIA_CONFIG = {
   audio: { icon: ZapIcon, color: "#A855F7", label: "AUDIO", bg: "rgba(168, 85, 247, 0.1)", border: "rgba(168, 85, 247, 0.2)" },
   document: { icon: FileTextIcon, color: "#3B82F6", label: "DOCUMENT", bg: "rgba(59, 130, 246, 0.1)", border: "rgba(59, 130, 246, 0.2)" },
   article: { icon: FileTextIcon, color: "#00E5FF", label: "ARTICLE", bg: "rgba(0, 229, 255, 0.1)", border: "rgba(0, 229, 255, 0.2)" },
-  unknown: { icon: LinkIcon, color: "#64748B", label: "WAITING", bg: "rgba(100, 116, 139, 0.08)", border: "rgba(100, 116, 139, 0.15)" },
+  unknown: { icon: LinkIcon, color: "#64748B", label: "INVALID URL", bg: "rgba(100, 116, 139, 0.08)", border: "rgba(100, 116, 139, 0.15)" },
 };
 
 // ━━━ SHORTCUT TEMPLATES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -267,33 +337,67 @@ const IFTTT_METHODS = [
 
 // ━━━ MAIN APP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function App() {
-  const [inputUrl, setInputUrl] = useState("");
+  // Accept shared URLs on load via ?url= (populated by the Send to Serve shortcut)
+  const [inputUrl, setInputUrl] = useState(getSharedUrl);
   const [copied, setCopied] = useState(false);
-  const [mediaType, setMediaType] = useState("unknown");
   const [activeTab, setActiveTab] = useState("execute");
   const [expandedShortcut, setExpandedShortcut] = useState(null);
   const [pushState, setPushState] = useState("idle");
+  const [webhookConfig, setWebhookConfig] = useState(loadWebhookConfig);
+  const [webhookDraft, setWebhookDraft] = useState(webhookConfig);
+  const [webhookSaved, setWebhookSaved] = useState(false);
+  const [webhookState, setWebhookState] = useState("idle");
+  const tabRefs = useRef({});
+
+  const parsedUrl = parseWebUrl(inputUrl);
+  const mediaType = detectMediaType(inputUrl);
+  const canRoute = Boolean(parsedUrl);
+  const webhookConfigured = Boolean(webhookConfig.event && webhookConfig.key);
 
   const handleUrlChange = (e) => {
-    const v = e.target.value;
-    setInputUrl(v);
-    setMediaType(detectMediaType(v));
+    setInputUrl(e.target.value);
     setPushState("idle");
+    setWebhookState("idle");
   };
 
   const handlePushToSafari = () => {
-    if (!inputUrl) return;
+    if (!parsedUrl) return;
     setPushState("pushing");
     setTimeout(() => {
       setPushState("done");
-      const encoded = encodeURIComponent(inputUrl);
+      const encoded = encodeURIComponent(parsedUrl.href);
       window.location.href = `shortcuts://run-shortcut?name=ForceSafari&input=text&text=${encoded}`;
+      setTimeout(() => setPushState("idle"), 2500);
     }, 600);
   };
 
+  const handleSaveToHome = () => {
+    setActiveTab("shortcuts");
+    setExpandedShortcut("save-to-home");
+  };
+
   const handleIFTTT = () => {
-    if (!inputUrl) return;
-    alert(`IFTTT Webhook would fire with payload:\n${inputUrl}`);
+    if (!parsedUrl) return;
+    if (!webhookConfigured) {
+      // Nothing to fire yet — take the user to the webhook config instead
+      setActiveTab("automate");
+      return;
+    }
+    setWebhookState("sending");
+    const endpoint = `https://maker.ifttt.com/trigger/${encodeURIComponent(webhookConfig.event)}/with/key/${encodeURIComponent(webhookConfig.key)}?value1=${encodeURIComponent(parsedUrl.href)}`;
+    // no-cors: IFTTT doesn't send CORS headers; the response is opaque, so
+    // resolution means "dispatched", not "verified delivered"
+    fetch(endpoint, { method: "POST", mode: "no-cors" })
+      .then(() => setWebhookState("sent"))
+      .catch(() => setWebhookState("error"));
+  };
+
+  const handleWebhookSave = () => {
+    const next = { event: webhookDraft.event.trim(), key: webhookDraft.key.trim() };
+    setWebhookConfig(next);
+    saveWebhookConfig(next);
+    setWebhookSaved(true);
+    setTimeout(() => setWebhookSaved(false), 2000);
   };
 
   const copyToClipboard = () => {
@@ -311,6 +415,16 @@ export default function App() {
     { id: "shortcuts", label: "Shortcuts" },
     { id: "automate", label: "Automate" },
   ];
+
+  // Roving arrow-key navigation between tabs (WAI-ARIA tabs pattern)
+  const handleTabKeyDown = (e, index) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    const delta = e.key === "ArrowRight" ? 1 : -1;
+    const next = tabs[(index + delta + tabs.length) % tabs.length];
+    setActiveTab(next.id);
+    tabRefs.current[next.id]?.focus();
+  };
 
   return (
     <div style={{
@@ -347,6 +461,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 @keyframes breathe { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+button:focus-visible, input:focus-visible, a:focus-visible {
+  outline: 2px solid rgba(0, 229, 255, 0.6);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
 
 .fade-up { animation: fadeUp 0.4s ease-out both; }
 .fade-up-1 { animation-delay: 0.05s; }
@@ -489,7 +617,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
               background: "rgba(0, 229, 255, 0.1)", border: "1px solid rgba(0, 229, 255, 0.25)",
               color: "#00E5FF", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em",
             }}>
-              v2.0
+              v2.1
             </span>
           </div>
 
@@ -518,11 +646,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
           }}>
 
             {/* TABS */}
-            <div className="fade-up fade-up-1" style={{ display: "flex", gap: 0, marginBottom: 24, borderBottom: "1px solid rgba(100, 116, 139, 0.12)", paddingBottom: 0 }}>
-              {tabs.map((tab) => (
+            <div className="fade-up fade-up-1" role="tablist" aria-label="SafariServe sections" style={{ display: "flex", gap: 0, marginBottom: 24, borderBottom: "1px solid rgba(100, 116, 139, 0.12)", paddingBottom: 0 }}>
+              {tabs.map((tab, index) => (
                 <button
                   key={tab.id}
+                  ref={(el) => { tabRefs.current[tab.id] = el; }}
+                  role="tab"
+                  id={`tab-${tab.id}`}
+                  aria-controls={`panel-${tab.id}`}
+                  aria-selected={activeTab === tab.id}
+                  tabIndex={activeTab === tab.id ? 0 : -1}
                   onClick={() => setActiveTab(tab.id)}
+                  onKeyDown={(e) => handleTabKeyDown(e, index)}
                   style={{
                     flex: 1, padding: "10px 0 12px", fontSize: 12, fontWeight: 700,
                     fontFamily: "'Outfit', sans-serif",
@@ -546,7 +681,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
             {/* ═══ TAB: EXECUTE / ROUTE ═══ */}
             {activeTab === "execute" && (
-              <div className="fade-up fade-up-2">
+              <div className="fade-up fade-up-2" role="tabpanel" id="panel-execute" aria-labelledby="tab-execute">
                 {/* Payload Section */}
                 <div style={{ marginBottom: 28 }}>
                   <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 700, letterSpacing: "0.08em", color: "#B8CCE0", marginBottom: 4, textTransform: "uppercase" }}>
@@ -567,6 +702,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                       value={inputUrl}
                       onChange={handleUrlChange}
                       placeholder="Paste media URL here..."
+                      aria-label="Media URL"
                       style={{
                         flex: 1, background: "transparent", border: "none", color: "#E2E8F0",
                         fontSize: 15, padding: "10px 0", fontFamily: "inherit",
@@ -574,6 +710,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                     />
                     <button
                       onClick={copyToClipboard}
+                      aria-label={copied ? "Copied" : "Copy URL"}
                       style={{
                         padding: 10, borderRadius: 12, flexShrink: 0, transition: "all 0.2s",
                         background: copied ? "rgba(34, 197, 94, 0.15)" : "rgba(100, 116, 139, 0.08)",
@@ -586,7 +723,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
                   {/* Media type badge */}
                   {inputUrl && (
-                    <div className="fade-up" style={{
+                    <div className="fade-up" role="status" style={{
                       marginTop: 10, display: "inline-flex", alignItems: "center", gap: 8,
                       padding: "6px 12px", borderRadius: 10,
                       background: mc.bg, border: `1px solid ${mc.border}`,
@@ -608,10 +745,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                   {/* Push to Safari */}
                   <button
                     onClick={handlePushToSafari}
-                    disabled={!inputUrl}
+                    disabled={!canRoute}
                     style={{
                       width: "100%", position: "relative",
-                      opacity: inputUrl ? 1 : 0.4, pointerEvents: inputUrl ? "auto" : "none",
+                      opacity: canRoute ? 1 : 0.4, pointerEvents: canRoute ? "auto" : "none",
                     }}
                   >
                     <div style={{
@@ -647,10 +784,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                     </div>
                   </button>
 
-                  {/* Add to Home Screen */}
+                  {/* Add to Home Screen — opens the step-by-step guide */}
                   <button
-                    disabled={!inputUrl}
-                    style={{ width: "100%", opacity: inputUrl ? 1 : 0.4, pointerEvents: inputUrl ? "auto" : "none" }}
+                    onClick={handleSaveToHome}
+                    style={{ width: "100%" }}
                   >
                     <div style={{
                       display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -665,7 +802,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                         </div>
                         <div style={{ textAlign: "left" }}>
                           <div style={{ fontWeight: 700, fontSize: 15, color: "#B8CCE0" }}>Save to Home Screen</div>
-                          <div style={{ fontSize: 12, color: "#3D5068", marginTop: 2 }}>Once in Safari → Share → Add to Home</div>
+                          <div style={{ fontSize: 12, color: "#3D5068", marginTop: 2 }}>View the guide: Share → Add to Home Screen</div>
                         </div>
                       </div>
                       <ChevronRightIcon size={18} style={{ color: "#253040" }} />
@@ -675,23 +812,35 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                   {/* IFTTT Webhook */}
                   <button
                     onClick={handleIFTTT}
-                    disabled={!inputUrl}
-                    style={{ width: "100%", opacity: inputUrl ? 1 : 0.4, pointerEvents: inputUrl ? "auto" : "none" }}
+                    disabled={!canRoute || webhookState === "sending"}
+                    style={{ width: "100%", opacity: canRoute ? 1 : 0.4, pointerEvents: canRoute ? "auto" : "none" }}
                   >
                     <div style={{
                       display: "flex", alignItems: "center", justifyContent: "space-between",
                       padding: "16px 18px", borderRadius: 18,
-                      background: "rgba(8, 16, 30, 0.35)", border: "1px solid rgba(100, 116, 139, 0.08)",
+                      background: "rgba(8, 16, 30, 0.35)",
+                      border: `1px solid ${webhookState === "sent" ? "rgba(34, 197, 94, 0.25)" : webhookState === "error" ? "rgba(255, 77, 106, 0.25)" : "rgba(100, 116, 139, 0.08)"}`,
                       transition: "all 0.2s",
                       boxShadow: "inset 0 1px 0 rgba(255,255,255,0.02)",
                     }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                        <div style={{ padding: 11, borderRadius: 14, background: "rgba(168, 85, 247, 0.1)", color: "#A855F7" }}>
-                          <ZapIcon size={22} />
+                        <div style={{
+                          padding: 11, borderRadius: 14,
+                          background: webhookState === "sent" ? "rgba(34, 197, 94, 0.12)" : "rgba(168, 85, 247, 0.1)",
+                          color: webhookState === "sent" ? "#22C55E" : "#A855F7",
+                          transition: "all 0.3s",
+                        }}>
+                          {webhookState === "sent" ? <CheckIcon size={22} /> : <ZapIcon size={22} />}
                         </div>
                         <div style={{ textAlign: "left" }}>
                           <div style={{ fontWeight: 700, fontSize: 15, color: "#B8CCE0" }}>Trigger IFTTT Webhook</div>
-                          <div style={{ fontSize: 12, color: "#3D5068", marginTop: 2 }}>Send payload to automation logic</div>
+                          <div style={{ fontSize: 12, color: webhookState === "error" ? "#FF4D6A" : "#3D5068", marginTop: 2 }}>
+                            {webhookState === "sending" ? "Dispatching payload..."
+                              : webhookState === "sent" ? "Payload dispatched"
+                              : webhookState === "error" ? "Dispatch failed — check connection"
+                              : webhookConfigured ? "Send payload to automation logic"
+                              : "Set up your webhook in Automate"}
+                          </div>
                         </div>
                       </div>
                       <ShareIcon size={16} style={{ color: "#253040" }} />
@@ -703,7 +852,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
             {/* ═══ TAB: SHORTCUTS ═══ */}
             {activeTab === "shortcuts" && (
-              <div className="fade-up fade-up-2">
+              <div className="fade-up fade-up-2" role="tabpanel" id="panel-shortcuts" aria-labelledby="tab-shortcuts">
                 <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 700, letterSpacing: "0.08em", color: "#B8CCE0", marginBottom: 4, textTransform: "uppercase" }}>
                   Shortcut Construction
                 </h2>
@@ -795,7 +944,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
             {/* ═══ TAB: AUTOMATE ═══ */}
             {activeTab === "automate" && (
-              <div className="fade-up fade-up-2">
+              <div className="fade-up fade-up-2" role="tabpanel" id="panel-automate" aria-labelledby="tab-automate">
                 <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 700, letterSpacing: "0.08em", color: "#B8CCE0", marginBottom: 4, textTransform: "uppercase" }}>
                   Automation Methods
                 </h2>
@@ -829,9 +978,61 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                     <SettingsIcon size={14} style={{ color: "#00E5FF" }} />
                     <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: 700, color: "#00E5FF", letterSpacing: "0.08em" }}>WEBHOOK CONFIG</span>
+                    {webhookConfigured && (
+                      <span style={{
+                        marginLeft: "auto", fontSize: 9, fontWeight: 700, padding: "3px 8px", borderRadius: 6,
+                        background: "rgba(34, 197, 94, 0.1)", color: "#22C55E",
+                        border: "1px solid rgba(34, 197, 94, 0.2)", letterSpacing: "0.08em",
+                      }}>ACTIVE</span>
+                    )}
                   </div>
-                  <p style={{ fontSize: 12, color: "#3D5068", lineHeight: 1.6 }}>
-                    Set your IFTTT Maker webhook key in the SafariServe config to enable direct payload dispatch. The webhook URL follows the pattern: <span style={{ fontFamily: "monospace", color: "#4A6178", wordBreak: "break-all" }}>https://maker.ifttt.com/trigger/&#123;event&#125;/with/key/&#123;your_key&#125;</span>
+                  <p style={{ fontSize: 12, color: "#3D5068", lineHeight: 1.6, marginBottom: 12 }}>
+                    Enter your IFTTT Maker event name and key to enable direct payload dispatch from the Route tab. The webhook fires: <span style={{ fontFamily: "monospace", color: "#4A6178", wordBreak: "break-all" }}>https://maker.ifttt.com/trigger/&#123;event&#125;/with/key/&#123;your_key&#125;</span>
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <input
+                      type="text"
+                      value={webhookDraft.event}
+                      onChange={(e) => setWebhookDraft({ ...webhookDraft, event: e.target.value })}
+                      placeholder="Event name (e.g. safariserve_push)"
+                      aria-label="IFTTT event name"
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                      style={{
+                        background: "rgba(6, 12, 24, 0.7)", border: "1px solid rgba(100, 116, 139, 0.12)",
+                        borderRadius: 12, padding: "10px 14px", color: "#E2E8F0", fontSize: 13, fontFamily: "inherit",
+                      }}
+                    />
+                    <input
+                      type="password"
+                      value={webhookDraft.key}
+                      onChange={(e) => setWebhookDraft({ ...webhookDraft, key: e.target.value })}
+                      placeholder="Maker webhook key"
+                      aria-label="IFTTT Maker webhook key"
+                      autoComplete="off"
+                      style={{
+                        background: "rgba(6, 12, 24, 0.7)", border: "1px solid rgba(100, 116, 139, 0.12)",
+                        borderRadius: 12, padding: "10px 14px", color: "#E2E8F0", fontSize: 13, fontFamily: "inherit",
+                      }}
+                    />
+                    <button
+                      onClick={handleWebhookSave}
+                      disabled={!webhookDraft.event.trim() || !webhookDraft.key.trim()}
+                      style={{
+                        padding: "10px 14px", borderRadius: 12, fontSize: 12, fontWeight: 700,
+                        fontFamily: "'Outfit', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
+                        background: webhookSaved ? "rgba(34, 197, 94, 0.12)" : "rgba(0, 229, 255, 0.1)",
+                        color: webhookSaved ? "#22C55E" : "#00E5FF",
+                        border: `1px solid ${webhookSaved ? "rgba(34, 197, 94, 0.25)" : "rgba(0, 229, 255, 0.25)"}`,
+                        opacity: webhookDraft.event.trim() && webhookDraft.key.trim() ? 1 : 0.4,
+                        transition: "all 0.2s",
+                      }}
+                    >
+                      {webhookSaved ? "Saved" : "Save Config"}
+                    </button>
+                  </div>
+                  <p style={{ fontSize: 11, color: "#3D5068", lineHeight: 1.6, marginTop: 10, opacity: 0.8 }}>
+                    Stored only in this browser (localStorage) — your key never leaves the device except to call IFTTT directly.
                   </p>
                 </div>
               </div>
@@ -868,7 +1069,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
           </div>
 
           <div className="footer-suite-tag">A VASEY/AI Production</div>
-          <div className="footer-app-tag">SafariServe v2.0 &middot; Intelligent URL Relay Utility</div>
+          <div className="footer-app-tag">SafariServe v2.1 &middot; Intelligent URL Relay Utility</div>
           <div className="footer-copyright">
             &copy; 2026 <a href="https://vaseymultimedia.com" target="_blank" rel="noopener">VASEY Multimedia</a>. All rights reserved.<br/>
             Designed &amp; engineered by <a href="https://vasey.ai" target="_blank" rel="noopener">VASEY/AI</a>
