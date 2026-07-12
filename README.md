@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/SeanVasey/SafariServe/actions/workflows/ci.yml"><img src="https://github.com/SeanVasey/SafariServe/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="https://github.com/SeanVasey/SafariServe/actions/workflows/deploy-pages.yml"><img src="https://github.com/SeanVasey/SafariServe/actions/workflows/deploy-pages.yml/badge.svg" alt="Deploy"></a>
-  <img src="https://img.shields.io/badge/version-2.0.0-00D2FF?style=flat&labelColor=0A0E14" alt="Version 2.0.0">
+  <img src="https://img.shields.io/badge/version-2.1.0-00D2FF?style=flat&labelColor=0A0E14" alt="Version 2.1.0">
   <a href="https://seanvasey.github.io/SafariServe/"><img src="https://img.shields.io/badge/demo-live-00B4D8?style=flat&labelColor=0A0E14" alt="Live Demo"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-FFB26B?style=flat&labelColor=0A0E14" alt="License"></a>
 </p>
@@ -25,9 +25,11 @@ SafariServe accepts content from **any source** — Brave, Chrome, Firefox, Shar
 ## Features
 
 - **Push to Safari** — Route any URL to Safari via the ForceSafari Apple Shortcut
-- **Media Type Detection** — Auto-classifies URLs as Video, Audio, Image, Document, or Article
+- **Shared URL Intake** — Arrives pre-filled via the `?url=` query parameter from the Send to Serve shortcut
+- **Media Type Detection** — Parses and validates URLs, classifying them as Video, Audio, Image, Document, or Article by hostname and file extension
 - **Shortcut Construction** — Step-by-step guides for building Send to Serve, ForceSafari, and Save to Home Screen shortcuts
-- **IFTTT Webhook Integration** — Trigger automation workflows via IFTTT Maker webhooks
+- **IFTTT Webhook Integration** — Configure your Maker event + key in-app (stored locally) and dispatch payloads to IFTTT automation workflows
+- **Accessible** — WAI-ARIA tabs with keyboard navigation, visible focus outlines, and `prefers-reduced-motion` support
 - **Animated Mesh Background** — Canvas-based electric cyan particle system with flowing ribbons
 - **PWA** — Installable as a Progressive Web App on the Home Screen
 - **Pipeline Flow** — Visual diagram: Brave → Send to Serve → SafariServe → ForceSafari → Safari

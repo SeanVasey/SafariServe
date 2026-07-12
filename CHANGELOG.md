@@ -6,7 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-07-12
+
+### Added
+
+- Accept shared URLs via the `?url=` query parameter (previously documented but not implemented) — the Send to Serve shortcut flow now pre-fills the Route tab on load
+- Functional IFTTT webhook integration: configure your Maker event name + key in the Automate tab (persisted to browser localStorage only), then dispatch real payloads from the Route tab with sending / dispatched / error feedback
+- URL validation: routing actions enable only for parseable http(s) URLs; bare domains (`example.com/page`) are accepted by assuming `https://`; `javascript:` and other non-web schemes are rejected
+- WAI-ARIA tabs pattern: `tablist`/`tab`/`tabpanel` roles, `aria-selected`, roving tabindex, and Arrow key navigation between tabs
+- `prefers-reduced-motion` support: the canvas mesh renders a single static frame and CSS animations/transitions are effectively disabled for users who opt out of motion
+- Visible `:focus-visible` outlines for keyboard users
+- `aria-label`s on the URL input, copy button, and webhook config inputs; `aria-hidden` on the decorative canvas
+- 15 new tests covering shared-URL intake, validation, webhook config/dispatch, Save to Home Screen navigation, and tab accessibility (33 total)
+
 ### Changed
+
+- "Save to Home Screen" now opens the step-by-step guide in the Shortcuts tab (was a non-functional button)
+- Media type detection parses URLs and matches hostnames exactly (or by subdomain) instead of substring matching, so `evil.com/?ref=youtube.com` is no longer classified as video
+- Canvas background respects `devicePixelRatio` (capped at 2×) instead of hardcoding 2×, and spawns particles across the actual canvas dimensions
+- "Push to Safari" routes the normalized parsed URL and resets to idle a moment after completing
+
+### Removed
+
+- Placeholder `alert()` stub for the IFTTT webhook trigger
+
+### Changed (icons, previously unreleased)
 
 - Replace blurry `<img>`-based icon with inline `<svg>` loaded from file via Vite `?raw` import for crisp rendering at any size
 - Replace old compass favicon with uploaded SafariServe Icon SVG
