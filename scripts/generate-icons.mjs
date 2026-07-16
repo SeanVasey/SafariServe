@@ -1,17 +1,19 @@
 // Regenerate raster app-icon assets from the vector sources.
 //
 // Sources (committed at the repo root / public/):
-//   - safariserve-icon-ios.svg      → the styled "app icon": rounded-rect
-//     gradient body + glow. Used for the favicon, PWA install icons, and the
-//     iOS Home Screen icon (opaque presentation).
+//   - safariserve-icon-ios.svg      → the styled "app icon": a full-bleed,
+//     edge-to-edge teal border plate behind a rounded-rect gradient body with
+//     an inner glow. Opaque by design, so iOS/Android home-screen masks never
+//     let the OS wallpaper show through. Used for the favicon, PWA install
+//     icons, and the iOS Home Screen icon.
 //   - src/assets/safariserve-icon.svg → the optimized transparent mark. Used on
 //     its own where a transparent background is ideal (in-app logo, and the
 //     maskable safe-zone composition below).
 //
 // Outputs (public/):
 //   - apple-touch-icon.png   180×180  opaque   (iOS Home Screen)
-//   - icon-192x192.png       192×192  alpha    (PWA, purpose "any")
-//   - icon-512x512.png       512×512  alpha    (PWA, purpose "any")
+//   - icon-192x192.png       192×192  opaque   (PWA, purpose "any")
+//   - icon-512x512.png       512×512  opaque   (PWA, purpose "any")
 //   - icon-512-maskable.png  512×512  opaque   (PWA, purpose "maskable")
 //
 // Run with: npm run generate:icons
@@ -29,8 +31,9 @@ const markSvg = readFileSync(join(root, "src", "assets", "safariserve-icon.svg")
 // Supersample the vector before downscaling for crisp edges at small sizes.
 const density = 384;
 
-// Deepest gradient stop of the icon body — used to fill the transparent
-// corners so opaque targets (iOS, maskable) have no black-alpha artifacts.
+// Deepest gradient stop of the icon body — used as a safety-net flatten
+// background for opaque targets so any anti-aliased edge pixels never expose
+// black-alpha artifacts. (The iOS source is already full-bleed opaque.)
 const DEEP = "#050c0d";
 
 // Full-bleed gradient background matching the icon body (for the maskable icon).
@@ -51,7 +54,7 @@ const renderIos = (size) =>
   sharp(iosSvg, { density }).resize(size, size, { fit: "contain" }).png();
 
 async function main() {
-  // PWA "any" — keep the styled rounded-rect with transparent corners.
+  // PWA "any" — the full-bleed styled app icon (teal plate + rounded body).
   await renderIos(192).toFile(join(pub, "icon-192x192.png"));
   await renderIos(512).toFile(join(pub, "icon-512x512.png"));
 
