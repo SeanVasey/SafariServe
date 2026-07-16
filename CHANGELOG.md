@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Adopt the new styled app icon (`safariserve-icon-ios.svg` — rounded-rect gradient body with glow) for the browser favicon, PWA install icons, and the iOS Home Screen so the app renders as a proper opaque icon when added to the Home Screen (supersedes the earlier transparent-background approach)
+- Regenerate `apple-touch-icon.png` (180×180, opaque) from the styled icon so iOS masks it cleanly into a squircle with no black-alpha corners
+- Regenerate `icon-192x192.png` and `icon-512x512.png` (purpose `"any"`) from the styled icon
+
+### Added
+
+- `icon-512-maskable.png` (purpose `"maskable"`) — full-bleed background with the mark inside the Android adaptive-icon safe zone
+- `scripts/generate-icons.mjs` and the `npm run generate:icons` script to reproducibly render every PNG icon from the SVG sources (via `sharp`)
+- Fallback `<link rel="icon" type="image/png" sizes="192x192">` in `index.html` for browsers without SVG favicon support
+
+### Notes
+
+- The optimized transparent mark (`src/assets/safariserve-icon.svg`) remains the in-app logo, where a transparent background is ideal — its artwork is unchanged by this update
+
 ## [2.1.1] - 2026-07-12
 
 ### Fixed

@@ -1,7 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="256.0px" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 256 256" width="256.0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+  <linearGradient id="bodyGrad" x1="0" y1="22" x2="0" y2="1002" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#113034"/>
+    <stop offset="0.55" stop-color="#09181b"/>
+    <stop offset="1" stop-color="#050c0d"/>
+  </linearGradient>
+  <linearGradient id="sheen" x1="0" y1="22" x2="0" y2="316.0" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.11"/>
+    <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.03"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="glowBlur" x="-30%" y="-30%" width="160%" height="160%" filterUnits="objectBoundingBox">
+    <feGaussianBlur stdDeviation="14"/>
+  </filter>
+  <clipPath id="bodyClip">
+    <rect x="22" y="22" width="980" height="980" rx="212" ry="212"/>
+  </clipPath>
+</defs>
+
+<!-- 1. OUTER GLOW (unclipped, blurred, behind) -->
+<rect x="18" y="18" width="988" height="988" rx="216" ry="216"
+      fill="none" stroke="#0db1c9" stroke-width="16" opacity="0.85" filter="url(#glowBlur)"/>
+
+<!-- clipped stack: body + sheen + mark -->
+<g clip-path="url(#bodyClip)">
+  <!-- 2. BODY -->
+  <rect x="22" y="22" width="980" height="980" rx="212" ry="212" fill="url(#bodyGrad)"/>
+  <!-- 3. UPPER SHEEN -->
+  <rect x="22" y="22" width="980" height="980" rx="212" ry="212" fill="url(#sheen)"/>
+  <!-- 4. MARK (unaltered) -->
+  <g transform="translate(5.055,5.055) scale(3.96051)">
 <defs/>
 <path d="M0 0L256 0L256 256L0 256L0 0Z" fill="#000000" fill-opacity="0" fill-rule="nonzero" opacity="1" stroke="none"/>
 <g id="Layer-1">
@@ -192,4 +220,10 @@
 <path d="M156.328 84.1282C156.264 84.2562 156.264 84.2562 156.2 84.3842C157.864 83.9089 157.056 84.7816 158.248 85.5362C158.312 85.4082 158.312 85.4082 158.376 85.2802C158.376 85.4722 158.376 85.4722 158.376 85.6642C159.15 85.8577 158.721 85.7366 159.656 86.0482C159.656 86.3682 159.656 86.3682 159.656 86.6882C159.19 86.5003 158.504 86.4703 158.504 85.9202C158.312 85.9202 158.312 85.9202 158.12 85.9202C158.12 85.7922 158.12 85.7922 158.12 85.6642C157.256 85.3688 157.687 85.5717 156.84 85.0242C156.776 85.2802 156.776 85.2802 156.712 85.5362C157.543 85.8134 156.904 86.6671 157.736 86.9442C157.736 87.2002 157.736 87.2002 157.736 87.4562C158.184 87.5842 158.184 87.5842 158.632 87.7122C158.632 87.9042 158.632 87.9042 158.632 88.0962C159.016 88.1602 159.016 88.1602 159.4 88.2242C158.902 88.5857 158.31 88.6785 158.12 89.2482C157.928 89.2482 157.928 89.2482 157.736 89.2482C157.736 89.3762 157.736 89.3762 157.736 89.5042C157.083 89.1776 157.48 88.0586 157.48 87.3282C157.096 87.4562 157.096 87.4562 156.712 87.5842C156.557 86.8119 156.79 87.013 156.2 86.8162C156.2 86.6882 156.2 86.6882 156.2 86.5602C156.008 86.5602 156.008 86.5602 155.816 86.5602C155.633 85.3666 154.535 84.928 153.384 84.6402C153.384 84.5122 153.384 84.5122 153.384 84.3842C154.024 84.3842 154.024 84.3842 154.664 84.3842C154.664 84.1922 154.664 84.1922 154.664 84.0002C154.408 83.9362 154.408 83.9362 154.152 83.8722C154.152 83.7442 154.152 83.7442 154.152 83.6162C153.576 83.6162 153.576 83.6162 153 83.6162C153 83.4242 153 83.4242 153 83.2322C153.645 83.0302 155.275 83.3998 155.816 83.6162C156.04 83.7059 156.099 84.0519 156.328 84.1282Z" fill="#0694b4" fill-rule="nonzero" opacity="1" stroke="none"/>
 </g>
 </g>
+  </g>
+</g>
+
+<!-- 6. CRISP LINE (unclipped, sharp, on top) -->
+<rect x="24" y="24" width="976" height="976" rx="210" ry="210"
+      fill="none" stroke="#56c8d9" stroke-width="4" opacity="0.85"/>
 </svg>
