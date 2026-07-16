@@ -94,6 +94,17 @@ npm run test
 npm run lint
 ```
 
+### Regenerate icons
+
+The PWA / favicon / home-screen PNGs in `public/` are generated from the SVG
+sources (`safariserve-icon-ios.svg` for the styled app icon,
+`src/assets/safariserve-icon.svg` for the transparent mark). Regenerate them
+after changing either source:
+
+```bash
+npm run generate:icons
+```
+
 ## Project Structure
 
 ```
@@ -105,16 +116,20 @@ SafariServe/
 │   └── banner.svg              # README header banner
 ├── public/
 │   ├── .nojekyll               # Disables Jekyll processing on GitHub Pages
-│   ├── apple-touch-icon.png    # iOS home screen icon
-│   ├── favicon.svg             # App icon (SafariServe Icon SVG)
-│   ├── icon-192x192.png        # PWA manifest icon (192px)
-│   ├── icon-512x512.png        # PWA manifest icon (512px)
+│   ├── apple-touch-icon.png    # iOS home screen icon (180×180, opaque)
+│   ├── favicon.svg             # App icon — styled iOS/PWA icon (safariserve-icon-ios.svg)
+│   ├── icon-192x192.png        # PWA manifest icon (192px, purpose "any")
+│   ├── icon-512x512.png        # PWA manifest icon (512px, purpose "any")
+│   ├── icon-512-maskable.png   # PWA maskable icon (512px, purpose "maskable")
 │   └── manifest.json           # PWA manifest
+├── scripts/
+│   └── generate-icons.mjs      # Regenerates the PNG icons from the SVG sources
+├── safariserve-icon-ios.svg    # Styled app-icon source (favicon + PWA + home screen)
 ├── src/
 │   ├── __tests__/
 │   │   └── App.test.jsx        # 18 component and interaction tests
 │   ├── assets/
-│   │   └── safariserve-icon.svg # App icon imported inline via ?raw
+│   │   └── safariserve-icon.svg # Optimized transparent mark — in-app logo (?raw)
 │   ├── test/
 │   │   └── setup.js            # Test setup (jest-dom, canvas mock)
 │   ├── App.jsx                 # Single-file application component

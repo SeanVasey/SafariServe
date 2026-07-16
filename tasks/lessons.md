@@ -4,6 +4,13 @@ Accumulated patterns from corrections and mistakes. Reviewed at the start of eac
 
 ---
 
+## 2026-07-16 — Styled iOS/PWA App Icon (supersedes transparent approach)
+
+- **iOS Home Screen icons should be opaque**: iOS masks `apple-touch-icon` into a squircle and composites transparent areas over black, so a transparent-background icon can show black corners. Ship a full-bleed **opaque** icon (here: `apple-touch-icon.png` flattened onto the icon's deepest gradient stop) and let iOS apply its own mask. This reverses the earlier "`background_color: transparent`" lesson below — the new `safariserve-icon-ios.svg` carries its own styled rounded-rect body.
+- **Separate `any` vs `maskable` PWA icons**: `purpose: "any"` icons are shown as-authored (keep the styled rounded-rect with transparent corners), while `purpose: "maskable"` icons are cropped by the launcher's shape — those need a full-bleed background with content inside the central ~80% safe zone. Provide both rather than forcing one asset to do both jobs.
+- **Two icon variants, one mark**: The styled opaque icon (favicon/PWA/home-screen) and the optimized transparent mark (in-app logo) share identical mark artwork — verify with a byte comparison before assuming the logo changed, so you don't needlessly re-touch the in-app rendering.
+- **Reproducible raster assets**: Generate committed PNGs from the SVG sources via a checked-in script (`scripts/generate-icons.mjs`, `npm run generate:icons`) using `sharp`, rather than hand-exporting — supersampling (high `density` then downscale) keeps small sizes crisp.
+
 ## 2026-03-12 — Fix Blurry Icon: Inline SVG + PWA Transparency
 
 - **`<img src="file.svg">` rasterizes**: Rendering an SVG via `<img>` causes the browser to rasterize it at the element's pixel dimensions, losing crispness at small sizes. For sharp vector rendering, inline the SVG as a DOM element using Vite's `?raw` import with `dangerouslySetInnerHTML`.

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint src --max-warnings 0",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "generate:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -26,6 +27,7 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
     "jsdom": "^26.0.0",
+    "sharp": "^0.35.3",
     "vite": "^6.1.0",
     "vitest": "^3.0.0"
   }
