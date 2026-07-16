@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `scripts/generate-icons.mjs` and the `npm run generate:icons` script to reproducibly render every PNG icon from the SVG sources (via `sharp`)
 - Fallback `<link rel="icon" type="image/png" sizes="192x192">` in `index.html` for browsers without SVG favicon support
 
+### Fixed
+
+- Order the PNG favicon fallback before the SVG `<link>` in `index.html` so SVG-capable browsers reliably prefer the scalable icon (post-merge review follow-up to #37)
+- Round the maskable icon's mark to an even size (368px) so it centers on exact integer padding instead of a fractional 71.5px, avoiding sub-pixel blur
+
 ### Notes
 
 - The optimized transparent mark (`src/assets/safariserve-icon.svg`) remains the in-app logo, where a transparent background is ideal — its artwork is unchanged by this update

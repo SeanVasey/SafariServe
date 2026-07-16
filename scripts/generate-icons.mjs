@@ -62,7 +62,9 @@ async function main() {
 
   // Maskable — full-bleed background + mark scaled into the ~80% safe zone.
   const maskSize = 512;
-  const markSize = Math.round(maskSize * 0.72);
+  // Round to an even integer so the mark centers on exact integer padding
+  // (72px per side) rather than a fractional 71.5px, avoiding sub-pixel blur.
+  const markSize = Math.round((maskSize * 0.72) / 2) * 2;
   const markPng = await sharp(markSvg, { density })
     .resize(markSize, markSize, { fit: "contain" })
     .png()
